@@ -1,28 +1,11 @@
 from flask import Flask,render_template,url_for
 
 app =Flask(__name__)
-lessons=[
-    {
-    "title":"hello",
-    "course":"english",
-    "instructor":"ahmed"
-},
-    {
-    "title":"alphabet",
-    "course":"arabic",
-    "instructor":"me"
-},
-    {
-    "title":"math1",
-    "course":"math",
-    "instructor":"ali"
-},
 
-]
 
 @app.route("/")
 def home():
-    return render_template("home.html",lessons=lessons)
+    return render_template("home.html")
 
 @app.route("/about")
 def about():

@@ -27,11 +27,9 @@ header {
 main {
   display: flex;
   flex-flow: row;
-  /* Ensure horizontal layout */
   height: 100vh;
   background-color: rgb(24, 51, 78);
   padding-top: 60px;
-  /* Space for the fixed header */
 }
 
 .menu {
@@ -173,14 +171,16 @@ img {
   margin: 0 auto;
 }
 
-.wrapper {
-  margin: 150px;
-  padding: 30px;
+.home-wrapper {
+  margin-top: 60px;
+  margin-left: 133px;
+  margin-right: 85px;
+  padding: 30px 20px;
   background-color: rgb(17, 61, 106);
   border: #fff 2px solid;
 }
 
-button {
+.machine-button {
   height: 40px;
   width: 150px;
   display: block;
@@ -199,6 +199,7 @@ button {
   font-size: 20px;
   padding: 20px;
 }
+
 .about {
   width: 100vh;
 }
@@ -207,22 +208,105 @@ button {
   font-size: 18px;
   padding: 20px;
 }
-.contactus p{
-  font-size: 18px;
-padding: 10px;}
 
-.Network-img{
+.contactus p {
+  font-size: 18px;
+  padding: 10px;
+}
+
+.Network-img {
   height: 400px;
   width: 400px;
   margin-bottom: 50px;
 }
+
 .network-wrapper {
-  margin: 20px 150px;
-  padding: 100px 550px;
+  padding: 35px 550px;
   background-color: rgb(17, 61, 106);
   border: #fff 2px solid;
-  
+  margin-top: 50px;
+  margin-left: 205px;
 }
-.network-form label{
-  
+
+.network-form input,
+option,
+select {
+  color: black;
+
+}
+
+.scenarios-wrapper {
+  width: fit-content;
+  padding: 60px 470px;
+  background-color: rgb(17, 61, 106);
+  border: #fff 2px solid;
+  margin-top: 60px;
+  margin-left: 133px;
+
+
+}
+
+.scenario-name {
+  position: relative;
+  left: 760px;
+  top: 60px;
+  max-width: fit-content;
+
+
+}
+
+section {
+  width: fit-content;
+}
+
+.scenario-square {
+  width: 120px;
+  height: 120px;
+  background-color: rgb(59, 59, 219);
+  text-align: center;
+  border: 3px rgb(222, 209, 209) solid;
+  align-content: center;
+}
+
+.scenarios-container {
+  display: flex;
+  gap: 150px;
+  position: relative;
+  right: 230px;
+}
+
+.navigate-button {
+  font-size: 40px;
+  background-color: transparent;
+  color: white;
+  border: none;
+}
+::-webkit-scrollbar {
+  width: 12px; /* Width of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: #1e1e2f; /* Background color of the track */
+  border-radius: 8px;
+}
+/* Scrollbar Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(17, 61, 106); /* Color of the scrollbar thumb */
+  border-radius: 8px;
+}
+.about-wrapper{
+  width: fit-content;
+  padding: 60px 60px;
+  background-color: rgb(17, 61, 106);
+  border: #fff 2px solid;
+  margin-top: 60px;
+  margin-left: 133px;
+}
+.alert-wrapper{
+  width: fit-content;
+  padding: 60px 370px;
+  background-color: rgb(17, 61, 106);
+  border: #fff 2px solid;
+  margin-top: 60px;
+  margin-left: 133px;
 }
