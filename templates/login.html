@@ -1,0 +1,38 @@
+{% extends "layout.html"%}
+{% block content %}
+<section class="as1" id="Contact">
+    <div class="box">
+        <span class="borderline"></span>
+        <form action="{{url_for('home')}}">
+            <h2>login</h2>
+            <div class="inputbox">
+                <input type="text" required="required">
+                <span>Username</span>
+                <i></i>
+            </div>
+            <div class="inputbox">
+                <input type="email" required="required">
+                <span>email</span>
+                <i></i>
+            </div>
+            <div class="inputbox">
+                <input type="Phone Number" required="required">
+                <span>Phone Number</span>
+                <i></i>
+            </div>
+            <div class="inputbox">
+                <input type="password" required="required">
+                <span>Password</span>
+                <i></i>
+            </div>
+            <input class  type="submit" value="SEND">
+        </form>
+    </div>
+</section>
+
+
+
+
+
+
+{% endblock %}

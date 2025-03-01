@@ -14,9 +14,9 @@ def about():
 def scenario():
     return render_template("scenariopage.html")
 
-@app.route("/network")
-def network():
-    return render_template("networkpage.html")
+@app.route("/login")
+def login():
+    return render_template("login.html")
 
 @app.route("/alerts")
 def alerts():
