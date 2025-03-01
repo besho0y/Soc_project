@@ -22,6 +22,10 @@ def login():
 def alerts():
     return render_template("alertspage.html")
 
+@app.route("/signup")
+def signup():
+    return render_template("signup.html")
+
 
 
 

@@ -1,0 +1,17 @@
+.alert-wrapper{
+    width: fit-content;
+    padding: 60px 370px;
+    background-color: rgb(17, 61, 106);
+    border: #fff 2px solid;
+    margin-top: 60px;
+    margin-left: 133px;
+  }
+
+.alerts {
+    width: 100vh;
+  }
+  
+  .alerts li {
+    font-size: 20px;
+    padding: 20px;
+  }

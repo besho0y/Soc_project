@@ -1,0 +1,30 @@
+.scenarios-wrapper {
+    width: fit-content;
+    padding: 60px 470px;
+    background-color: rgb(17, 61, 106);
+    border: #fff 2px solid;
+    margin-top: 60px;
+    margin-left: 133px;
+  
+  
+  }
+  .scenarios-container {
+    display: flex;
+    gap: 150px;
+    position: relative;
+    right: 230px;
+  }
+  .scenario-square {
+    width: 120px;
+    height: 120px;
+    background-color: rgb(59, 59, 219);
+    text-align: center;
+    border: 3px rgb(222, 209, 209) solid;
+    align-content: center;
+  }
+  .scenario-name {
+    position: relative;
+    left: 760px;
+    top: 60px;
+    max-width: fit-content;
+  }
