@@ -1,0 +1,238 @@
+header h1{
+    margin-right: auto;
+}
+
+.imgbox{
+    width: 50px;
+    height: 50px;
+    border-radius: 30px;
+    overflow: hidden;
+    border: 3px solid white;
+    flex-shrink: 0;
+}
+.imgbox img{
+    width: 100%;
+}
+.nav-links{
+    list-style: none;
+    display: flex;
+gap: 40px;
+
+}
+.nav-links i{
+   font-size: 25px;
+}
+.menu{
+  display: flex;
+  margin-top: 150px;
+  list-style: none;
+margin-left: 50px;
+}
+.menu a{
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: bold;
+}
+.menu-div{
+    margin-left: 50px;
+      padding: 10px;
+}
+.menu-div.active{
+    background-color: #071527;
+    border-top-left-radius:10px ;
+    border-top-right-radius:10px ;
+  
+}
+
+section{
+    height: 100vh;
+    background-color:#071527;
+    width: 95%;
+    margin: auto;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* HOME */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* SCENARIOS */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* CHALLLENGES */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ACHIEVEMENT */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
