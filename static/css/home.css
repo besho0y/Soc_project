@@ -1,0 +1,413 @@
+.home-section1 {
+  padding: 200px 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+}
+
+.section1-img img {
+  max-width: 100%;
+  height: auto;
+  width: 400px;
+}
+
+.home-section1-content {
+  max-width: 600px;
+  text-align: left; 
+}
+
+.home-section1-content h2 {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+.home-section1-content p {
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.getstarted-btn {
+  background-color: transparent;
+  color: white;
+  padding: 10px 20px;
+  border: 1px solid white;
+  border-radius: 5px;
+  font-size: 18px;
+  text-decoration: none;
+  margin-top: 20px;
+  display: inline-block;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.home-section2 {
+  padding: 200px 20px;
+  text-align: center;
+}
+
+.home-section2-headline {
+  font-size: 36px;
+  margin-bottom: 150px;
+}
+
+.home-section2-headline span {
+  color: rgb(53, 194, 241);
+}
+
+.aboutdiv-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.about-div {
+  width: 250px;
+  padding: 20px;
+  border: 1px solid white;
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+
+.about-div:hover {
+  border-color: rgb(53, 194, 241);
+  transform: scale(1.05);
+}
+
+.about-div h3 {
+  color: rgb(105, 197, 255);
+  margin-bottom: 15px;
+}
+
+.about-div p {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Section 3: Scenarios */
+.home-section3 {
+  padding: 200px 20px; /* Reduced padding for smaller screens */
+  text-align: center; /* Center-align content */
+}
+
+.scenarios-container {
+  display: flex;
+  flex-wrap: wrap; /* Allow scenarios to wrap on smaller screens */
+  justify-content: center;
+  gap: 30px; /* Reduced gap for smaller screens */
+}
+
+.home-section3-head {
+  font-size: 36px;
+  margin-bottom: 50px; /* Reduced margin for smaller screens */
+  width: 100%; /* Full width for smaller screens */
+  text-align: center; /* Center-align headline */
+  margin-left: 0; /* Remove left margin */
+}
+
+.home-section3-head span {
+  color: rgb(53, 194, 241);
+  margin-left: 10px; /* Reduced margin for smaller screens */
+}
+
+.home-section3-head hr {
+  width: 100%; /* Full width for smaller screens */
+  max-width: 470px; /* Limit width for larger screens */
+  margin: 20px auto; /* Center the horizontal rule */
+}
+
+.scenarios-div {
+  width: 300px;
+  height: auto; /* Allow height to adjust based on content */
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle border */
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+
+.scenarios-div:hover {
+  transform: scale(1.05); /* Slight zoom on hover */
+}
+
+.scenarios-div h3 {
+  color: rgb(53, 194, 241);
+  margin-bottom: 20px;
+}
+
+.scenarios-div img {
+  width: 100%; /* Make images responsive */
+  height: 150px;
+  object-fit: cover; /* Ensure images fit properly */
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.scenarios-div p {
+  word-spacing: 3px;
+  font-size: 16px;
+  line-height: 1.5; /* Improved readability */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+  .home-section3-head {
+    font-size: 32px; /* Slightly smaller font for tablets */
+  }
+
+  .scenarios-container {
+    gap: 20px; /* Reduced gap for tablets */
+  }
+
+  .scenarios-div {
+    width: 45%; /* Two columns on tablets */
+  }
+}
+
+@media (max-width: 768px) {
+  .home-section3-head {
+    font-size: 28px; /* Smaller font for smaller tablets */
+  }
+
+  .scenarios-div {
+    width: 100%; /* Single column on mobile */
+    max-width: 400px; /* Limit width for better readability */
+  }
+}
+
+@media (max-width: 480px) {
+  .home-section3-head {
+    font-size: 24px; /* Smaller font for mobile */
+  }
+
+  .scenarios-div img {
+    height: 120px; /* Smaller images for mobile */
+  }
+
+  .scenarios-div p {
+    font-size: 14px; /* Smaller text for mobile */
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ .home-section4 {
+  padding: 200px 20px;
+  background-color: #0a0a23; 
+  color: white;
+}
+
+.home-section4 h1 {
+  font-size: 48px;
+  color: #35c2f1; 
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.home-section4 h3 {
+  font-size: 32px;
+  color: #69c5ff;
+  margin-bottom: 20px;
+}
+
+.home-section4 p,
+.home-section4 li {
+  font-size: 18px;
+  line-height: 1.8;
+  color: #d0d0d0;
+}
+
+.home-section4 ol,
+.home-section4 ul {
+  padding-left: 30px;
+  margin-bottom: 30px;
+}
+
+.home-section4 li {
+  margin-bottom: 15px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.home-section5 {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 40px 20px;
+  background-color: #2c3e50;
+  color: #ecf0f1; 
+  font-family: 'Arial', sans-serif;
+  border-top: 4px solid #3498db; 
+}
+
+
+.team-section {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.team-section h2 {
+  font-size: 24px;
+  margin-bottom: 15px;
+  color: #3498db; 
+}
+
+.team-section .names {
+  list-style-type: none;
+  padding: 0;
+}
+
+.team-section .names li {
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: #bdc3c7; 
+}
+
+
+.contactus {
+  flex: 1;
+}
+
+.contactus h2 {
+  font-size: 24px;
+  margin-bottom: 15px;
+  color: #3498db; 
+}
+
+.contactus p {
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: #bdc3c7;
+}
+
+
+@media (max-width: 768px) {
+  .home-section5 {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .team-section {
+    margin-right: 0;
+    margin-bottom: 30px;
+  }
+}
