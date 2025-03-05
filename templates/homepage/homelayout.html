@@ -8,34 +8,40 @@
     <link rel='stylesheet' type='text/css' href="{{url_for('static',filename='css/main.css')}}">
     <link rel='stylesheet' type='text/css' href="{{url_for('static',filename='css/homepage.css')}}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src='main.js'></script>
+    <script src='../../static/js/layout.js'></script>
 </head>
 <body>
     <header>
         <h1>Socademy</h1>
         <ul class="nav-links">
-          <li>
-    <a class="notification-btn"> <i class="fas fa-bell"></i></a>
-   
-</li>
-            <li>
-                <div class="imgbox">
-                    <img src="../static/images/me.jpg" alt="profile_pic">
+            <li class="notification-container">
+                <a class="notification-btn"><i class="fas fa-bell"></i></a>
+                <div class="notification-menu">
+                    <p>No new notifications</p>
                 </div>
             </li>
+            
+<li>
+    <div class="imgbox">
+        <img src="../static/images/me.jpg" alt="profile_pic" onclick="toggleMenu()">   
+    </div>
+    <div id="profileMenu" class="dropdown-menu">
+        <p class="head-d">besho</p>
+        <p class="small-d">0 / 10 Hours Monthly Consecutive Days: 3</p>
+        <a href="{{url_for('profile')}}">Profile</a>
+        <a href="">Logout</a>
+    </div>
+</li>
+
         </ul>
     </header>
-
-<div class="menu">
-<div class="menu-div active"><a href="{{url_for('home')}}"><i class="fas fa-home"></i> Home</a></div>
-<div class="menu-div"><a href="{{url_for('scenario')}}"><i class="fas fa-scroll"></i> Scenarios</a></div>
-<div class="menu-div"><a href="{{url_for('challenges')}}"><i class="fas fa-trophy"></i> Challenges</a></div>
-<div class="menu-div"><a href="{{url_for('achievement')}}"><i class="fas fa-flag"></i> Your Achievment</a></div>
-
-
-
-
+   <div class="menu">
+    <a href="{{url_for('home')}}" class="menu-div active"><i class="fas fa-home"></i> Home</a>
+    <a href="{{url_for('scenario')}}" class="menu-div"><i class="fas fa-scroll"></i> Scenarios</a>
+    <a href="{{url_for('challenges')}}" class="menu-div"><i class="fas fa-trophy"></i> Challenges</a>
+    <a href="{{url_for('achievement')}}" class="menu-div"><i class="fas fa-flag"></i> Your Achievement</a>
 </div>
+
 
 
 

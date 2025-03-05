@@ -2,12 +2,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    position: fixed;
-      left: 755px;
+    margin-top: 73px;
   }
 
-
+.login-sec{
+  height: 800px;
+}
 
 
 
@@ -175,7 +175,6 @@
     position: relative;
     width: 380px;
     height: 800px;
-    background-color: #1c1c1c;
     border-radius: 8px;
     overflow: hidden;
   }

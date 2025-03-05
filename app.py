@@ -28,6 +28,11 @@ def achievement():
     return render_template("homepage/achievementpage.html")
 
 
+@app.route("/profile")
+def profile():
+    return render_template("homepage/profilepage.html")
+
+
 
 
 
