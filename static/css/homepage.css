@@ -178,7 +178,556 @@ section {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* HOME */
+
+.l-r-container-home{
+    display: flex;
+    gap: 20px;
+}
+.left-home-div{
+    width: 77%;
+}
+
+.right-home-div{
+    width: 23%;
+}
+
+.page {
+    min-height: 100vh;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.align-center {
+    align-items: center;
+
+}
+
+.gap-20 {
+    gap: 20px;
+}
+
+@media (max-width:767px) {
+    .block-mobile {
+        display: block;
+    }
+}
+
+.p-10 {
+    padding: 10px;
+}
+
+.p-15 {
+    padding: 15px;
+}
+
+.p-20 {
+    padding: 20px;
+}
+
+.m-20 {
+    margin: 20px;
+}
+
+.mt-0 {
+    margin-top: 0;
+}
+
+.p-relative {
+    position: relative;
+}
+
+
+.txt-c {
+    text-align: center;
+}
+
+.fs-14 {
+    font-size: 14px;
+}
+
+@media (max-width:767px) {
+    .txt-c-mobile {
+        text-align: center;
+    }
+}
+
+.rad-6 {
+    border-radius: 6px;
+}
+
+.d-grid {
+    display: grid;
+}
+
+.wrapper {
+    grid-template-columns: minmax(200px, 1fr);
+    margin-left: 10px;
+    margin-right: 10px;
+    gap: 10px;
+
+}
+
+
+
+
+
+.box1 {
+    border: 50px;
+    background-color: rgb(16, 19, 69);
+    display: flex;
+    width: 21.25em;
+    border-radius: 10px;
+    padding: 25px;
+    transition: 0.5s ease;
+    position: relative;
+}
+.box1::before {
+    content: "";
+    width: 95%;
+    height: 20px;
+    background-color: rgb(11, 50, 39);
+    position: absolute;
+    bottom: -10px; 
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 10px;
+    z-index:  0.5;;
+}
+
+
+.box1 p {
+  color: rgb(146,152,167);
+}
+
+.box1:hover {
+    transform: scale(1.1);
+}
+
+
+
+
+.icon {
+    size: 20px;
+    border-radius: 5px;
+    padding: 0px 0px 50px 0px;
+
+
+    color: #fff;
+    font-size: 1.7em;
+
+
+}
+
+.H1 {
+    font-size: 20px;
+}
+
+
+
+.info-home h3 {
+    color: #3a6cf4;
+    font-size: 1.2em;
+    font-weight: 700;
+    margin: 10px 0px 0px 0px;
+    padding: 50px 0px 0px 0px;
+}
+
+
+
+
+
+
+
+
+.container-home {
+    background-color: rgb(16, 19, 69);
+    padding: 20px;
+    border-radius: 8px;
+    width: 100%;
+    /* text-align: center;*/
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 51px 80px 22px 0px;
+    font-size: 120%;
+}
+
+
+
+.contant1 {
+    padding: 0px 150px 0px 0px;
+}
+
+.blue-text {
+    color: #38bdf8;
+}
+
+.link {
+    color: #38bdf8;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.buttons {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 30px 80px 80px 30px;
+    min-width: 30%;
+}
+
+.btn {
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+
+}
+
+.blue {
+    background-color: #2563eb;
+}
+
+.purple {
+    background-color: #9333ea;
+}
+
+.orange {
+    background-color: #f97316;
+}
+
+.yellow {
+    background-color: #facc15;
+}
+
+.green {
+    background-color: #22c55e;
+}
+
+.red {
+    background-color: #dc2626;
+}
+
+.btn:hover {
+    opacity: 0.8;
+}
+
+
+
+
+
+
+.chimera-container {
+    background-color: rgb(16, 19, 69);
+    padding: 40px;
+    border-radius: 8px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin: 0px 80px 80px 0px;
+    font-size: 100%;
+
+}
+
+.png1 {
+    margin: 5%;
+}
+
+
+
+.chimera-content {
+    display: flex;
+    align-items: center;
+}
+
+.chimera-logo {
+    width: 350px;
+    margin-right: 20px;
+}
+
+.chimera-text {
+    max-width: 650px;
+
+
+}
+
+
+
+.chimera-register {
+    text-align: center;
+}
+
+.btn {
+    padding: 10px 15px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+
+
+.btn:hover {
+    opacity: 0.8;
+}
+
+/*discord*/
+
+.discord-container {
+    padding: 20px;
+    background-color: rgb(16, 19, 69);
+    border-radius: 10px;
+    text-align: center;
+    height: fit-content;
+}
+
+.invite-text {
+    color: #FFFFFF;
+    font-size: 30px;
+    margin-bottom: 15px;
+}
+
+.discord-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #1E2248;
+    padding: 15px;
+    border-radius: 8px;
+    width: 100%;
+    min-width: 80%;
+    min-height: 180%;
+
+    size: 50%;
+
+}
+
+.discord-box img {
+    width: 100%;
+    height: 100%;
+}
+
+
+
+.discord-box:hover {
+    transform: scale(1.1);
+}
+
+.discord-logo {
+    width: 100px;
+    height: 50px;
+    margin-right: 10px;
+
+}
+
+.discord-text {
+    font-size: 32px;
+    font-weight: bold;
+    color: #7289DA;
+}
+
+
+
+
+
+
+
+.writeups-container {
+    background-color: rgb(16, 19, 69);
+    padding: 20px;
+    border-radius: 8px;
+    margin: 10px 0;
+    height: 416px;
+}
+
+.Welcome {
+    margin-bottom: 15px;
+}
+
+.small-text {
+    font-size: 14px;
+    color: #aaa;
+}
+
+.writeup {
+    display: flex;
+    align-items: center;
+    background-color: #3b82f6;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    position: relative;
+    transition: all 0.3s ease-in-out;
+
+}
+
+.writeup:hover {
+    background-color: #1657be;
+
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.writeup-text {
+    flex-grow: 1;
+}
+
+.likes {
+    background-color: black;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 14px;
+    margin-right: 10px;
+}
+
+.external-link {
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+}
+
+
+
+
+.container0 {
+    padding: 20px;
+    background-color: rgb(16, 19, 69);
+  border-radius: 10px;
+    margin-top: 22px;
+}
+
+.header h2 {
+    margin: 0;
+    font-size: 22px;
+}
+
+.header p {
+    font-size: 14px;
+    color: #BBBBBB;
+}
+
+.content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.course-image {
+
+    margin-right: 20px;
+    width: 70%;
+    height: 80%;
+}
+
+
+
+
+
+.course-image:hover {
+    transform: scale(1.1);
+}
+
+
+
+.demo-button {
+    background-color: #3366FF;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.demo-button:hover {
+    background-color: #2554CC;
+}
+
+
+
+
+
+
+
+.tickets .box {
+    border: 1px solid #ccc;
+    width: calc(50% -10px);
+
+}
+
+@media (max-width: 767px) {
+    .tickets .box {
+        width: 100%;
+
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -219,7 +768,7 @@ section {
 
 
 /* SCENARIOS */
-/* Existing CSS (unchanged) */
+
 .container {
     display: flex;
     flex-wrap: wrap;
@@ -559,17 +1108,7 @@ span {
     align-content: center;
 }
 
-.orange{
-    color: orange;
-}
 
-.red{
-    color: red;
-}
-
-.green{
-    color: green;
-}
 
 .challenge-btn{
     width: 200px;
