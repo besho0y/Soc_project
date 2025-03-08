@@ -10,7 +10,7 @@
             <img src="../static/images/me.jpg" alt="profile_pic" >   
         </div>
     <div class="name">
-        <h1>Beshoy</h1>
+        <h1>{{ username }}</h1>
         <p>Level:Begginer</p>
     </div>
     </div>
@@ -21,20 +21,13 @@
         
     <i class="fas fa-trophy"></i>
     <div class="n-points">
-        <p class="n">0 </p>
+        <p class="n">{{ points }} </p>
         <p class="p-name">points</p>
       </div>
 
-      <div class="n-points">
-        <p class="n">0 </p>
-        <p class="p-name">points</p>
-      </div>
-  
 
-  <div class="n-points">
-    <p class="n">0 </p>
-    <p class="p-name">points</p>
-  </div>
+
+ 
     </div>
 </div>
 
@@ -85,22 +78,21 @@
 
 
 
-
 <div class="progress">
-
     <h1>Progress</h1>
-<hr class="recent-hr">
-<div class="progress-div">
-<p>Scenarios</p>
-<p>1/20</p>
-</div>
+    <hr class="recent-hr">
 
-<div class="progress-div">
-    <p>Challenges</p>
-    <p>1/15</p>
+    <div class="progress-div">
+        <p>Scenarios</p>
+        <p>{{ total_scenarios }}/20</p>
     </div>
 
+    <div class="progress-div">
+        <p>Challenges</p>
+        <p>{{ total_challenges }}/15</p>
+    </div>
 </div>
+
 
 
 

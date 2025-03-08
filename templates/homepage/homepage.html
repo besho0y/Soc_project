@@ -18,7 +18,7 @@
     
                 <div class="info-home">
                     <div class="H1">
-                        <H3>0 / 220 </H3>
+                        <H3>{{total_scenarios}} / 220 </H3>
                     </div>
                     <p>Investigation completed \Total</p>
                 </div>
@@ -41,7 +41,7 @@
     
                 <div class="info-home">
                     <div class="H1">
-                        <H3>0 / 41</H3>
+                        <H3>{{total_challenges}} / 41</H3>
                     </div>
                     <p>Challenges completed \Total</p>
                 </div>
@@ -64,7 +64,7 @@
                     <div class="H1">
                         <H3>0 / 6775 </H3>
                     </div>
-                    <p>Your Points \Total Points</p>
+                    <p>{{points}}\Total Points</p>
                 </div>
     
                 <div class="P">
@@ -134,11 +134,10 @@
         </div>
     
         <div class="buttons">
-            <button class="btn blue">View Investigations 🕵</button>
-            <button class="btn purple">View Challenges 📄</button>
-            <button class="btn orange">View Your Profile 👤</button>
-            <button class="btn yellow">Highlight Badges & Titles 🎖</button>
-            <button class="btn green">Redeem Code 🎟</button>
+            <a href="{{url_for('scenario')}}" class="btn blue" >View Investigations 🕵</a>
+            <a href="{{url_for('challenges')}}" class="btn purple">View Challenges 📄</a>
+            <a href="{{url_for('user_profile')}}" class="btn orange">View Your Profile 👤</a>
+
             <button class="btn red">Help / FAQ ❓</button>
         </div>
             
@@ -251,63 +250,6 @@
             <img src="../../static/images/discord.jpg" alt="Discord Logo" class="discord-logo">
     
         </div>
-    </div>
-    
-    
-    
-    
-    
-    
-    
-    <!-- people -->
-    <div class="writeups-container">
-        <h2>Highest Rated Write-ups <span class="small-text">(rewards assigned daily)</span></h2>
-        <div class="writeup">
-            <img src="../../static/images/me.jpg" alt="User Avatar" class="avatar">
-            <div class="writeup-text">
-                <strong>jaalma</strong>
-                <p>Peak</p>
-            </div>
-            <span class="likes">20 likes</span>
-            <a href="#" class="external-link">🔗</a>
-        </div>
-        <div class="writeup">
-            <img src="../../static/images/me.jpg" alt="User Avatar" class="avatar">
-            <div class="writeup-text">
-                <strong>Danny Child</strong>
-                <p>Countdown</p>
-            </div>
-            <span class="likes">13 likes</span>
-            <a href="#" class="external-link">🔗</a>
-        </div>
-        <div class="writeup">
-            <img src="../../static/images/me.jpg" alt="User Avatar" class="avatar">
-            <div class="writeup-text">
-                <strong>Easty01</strong>
-                <p>Phishy v1</p>
-            </div>
-            <span class="likes">13 likes</span>
-            <a href="#" class="external-link">🔗</a>
-        </div>
-        <div class="writeup">
-            <img src="../../static/images/me.jpg" alt="User Avatar" class="avatar">
-            <div class="writeup-text">
-                <strong>SecurityNinja</strong>
-                <p>Pretium</p>
-            </div>
-            <span class="likes">13 likes</span>
-            <a href="#" class="external-link">🔗</a>
-        </div>
-        <div class="writeup">
-            <img src="../../static/images/me.jpg" alt="User Avatar" class="avatar">
-            <div class="writeup-text">
-                <strong>Easty01</strong>
-                <p>Pretium</p>
-            </div>
-            <span class="likes">12 likes</span>
-            <a href="#" class="external-link">🔗</a>
-        </div>
-            
     </div>
     
     

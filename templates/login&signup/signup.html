@@ -2,30 +2,31 @@
 {% block content %}
 <section class="as1" id="Contact">
     <div class="signup-box">
-        <form action="{{url_for('home')}}">
+        <form action="{{ url_for('signup') }}" method="POST">
             <h2>Sign Up</h2>
             <div class="inputbox">
-                <input type="text" required="required">
+                <input type="text" name="username" required="required">
                 <span>Username</span>
                 <i></i>
             </div>
             <div class="inputbox">
-                <input type="email" required="required">
-                <span>email</span>
+                <input type="email" name="email" required="required">
+                <span>Email</span>
                 <i></i>
             </div>
             <div class="inputbox">
-                <input type="Phone Number" required="required">
+                <input type="text" name="phone_number" required="required">
                 <span>Phone Number</span>
                 <i></i>
             </div>
             <div class="inputbox">
-                <input type="password" required="required">
+                <input type="password" name="password" required="required">
                 <span>Password</span>
                 <i></i>
             </div>
-            <input class  type="submit" value="SEND">
+            <input type="submit" value="SEND">
         </form>
+        
     </div>
 </section>
 

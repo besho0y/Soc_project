@@ -91,13 +91,6 @@ section {
 }
 
 
-.small-d{
-    font-size: 12px;
-    color: grey;
-    width: 115px;
-    line-height: 20px;
-
-}
 .head-d{
     text-align: start;
     height: 40px;
@@ -203,6 +196,8 @@ section {
 }
 
 .right-home-div{
+    margin-top: 20px;
+
     width: 23%;
 }
 
@@ -402,7 +397,8 @@ section {
     color: white;
     cursor: pointer;
     border-radius: 5px;
-
+text-align: center;
+text-decoration: none;
 }
 
 .blue {
@@ -416,13 +412,8 @@ section {
 .orange {
     background-color: #f97316;
 }
-
-.yellow {
-    background-color: #facc15;
-}
-
-.green {
-    background-color: #22c55e;
+.green{
+    background-color: green;
 }
 
 .red {
@@ -558,13 +549,6 @@ section {
 
 
 
-.writeups-container {
-    background-color: rgb(16, 19, 69);
-    padding: 20px;
-    border-radius: 8px;
-    margin: 10px 0;
-    height: 416px;
-}
 
 .Welcome {
     margin-bottom: 15px;
@@ -574,50 +558,6 @@ section {
     font-size: 14px;
     color: #aaa;
 }
-
-.writeup {
-    display: flex;
-    align-items: center;
-    background-color: #3b82f6;
-    padding: 10px;
-    margin: 5px 0;
-    border-radius: 5px;
-    position: relative;
-    transition: all 0.3s ease-in-out;
-
-}
-
-.writeup:hover {
-    background-color: #1657be;
-
-}
-
-.avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 15px;
-}
-
-.writeup-text {
-    flex-grow: 1;
-}
-
-.likes {
-    background-color: black;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 15px;
-    font-size: 14px;
-    margin-right: 10px;
-}
-
-.external-link {
-    text-decoration: none;
-    color: white;
-    font-size: 20px;
-}
-
 
 
 
@@ -1106,6 +1046,7 @@ span {
     border-radius: 10px;
     text-align: center;
     align-content: center;
+    padding: 3px;
 }
 
 

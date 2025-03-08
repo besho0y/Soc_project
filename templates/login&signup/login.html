@@ -1,33 +1,41 @@
-{% extends "login&signup/signlayout.html"%}
+{% extends "login&signup/signlayout.html" %}
 {% block content %}
 <section class="as1 login-sec" id="Contact">
     <div class="box">
-        <form action="{{url_for('home')}}">
+        <form action="{{ url_for('login') }}" method="POST">
             <h2>LOGIN</h2>
-           
+
             <div class="inputbox">
-                <input type="email" required="required">
-                <span>email</span>
+                <input type="email" name="email" required="required">
+                <span>Email</span>
                 <i></i>
             </div>
-            
+
             <div class="inputbox">
-                <input type="password" required="required">
+                <input type="password" name="password" required="required">
                 <span>Password</span>
                 <i></i>
             </div>
-            <input class  type="submit" value="SEND">
+
+            <input type="submit" value="SEND">
+
             <div class="creat-acc">
                 <p class="creat-acc-p">Don't have an account?</p>
-                <a href="{{url_for('signup')}}">create account</a></div>
+                <a href="{{ url_for('signup') }}">Create account</a>
+            </div>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div>
+      {% for category, message in messages %}
+        <p class="{{ category }}">{{ message }}</p>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
         </form>
-        
+
+      
     </div>
 </section>
-
-
-
-
-
-
 {% endblock %}

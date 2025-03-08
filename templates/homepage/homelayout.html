@@ -26,10 +26,12 @@
         <img src="../static/images/me.jpg" alt="profile_pic" onclick="toggleMenu()">   
     </div>
     <div id="profileMenu" class="dropdown-menu">
-        <p class="head-d">besho</p>
-        <p class="small-d">0 / 10 Hours Monthly Consecutive Days: 3</p>
-        <a href="{{url_for('profile')}}">Profile</a>
-        <a href="">Logout</a>
+        <p class="head-d">Welcome,{{username}}</p> 
+
+        <a href="{{ url_for('user_profile') }}">Profile</a>
+
+        <a href="{{ url_for('logout') }}">Logout</a>
+
     </div>
 </li>
 
