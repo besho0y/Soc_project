@@ -46,3 +46,38 @@ window.addEventListener('click', function(e) {
   }
 });
 
+
+//challenges
+document.addEventListener("DOMContentLoaded", function() {
+  fetch('/api/challenges')
+      .then(response => response.json())
+      .then(data => {
+          const challengesSec = document.querySelector('.challenges-sec');
+
+          // Clear existing content if needed
+          challengesSec.innerHTML = '';
+
+          // Loop through the challenges data and create divs
+          data.forEach(challenge => {
+              const challengeDiv = document.createElement('div');
+              challengeDiv.classList.add('challenges-div');
+
+              // Create the inner structure
+              challengeDiv.innerHTML = `
+                  <div class="challenges-text-box">
+                      <h3>${challenge.title}</h3>
+                      <p class="challenges-title">${challenge.description}</p>
+                      <div class="challenge-lvl">
+                          <p class="orange">${challenge.lvl}</p>
+                          <p class="red">${challenge.points} pt</p>
+                          <p class="green">${challenge.duration} min</p>
+                      </div>
+                      <button class="challenge-btn">Start Challenge</button>
+                  </div>
+              `;
+
+              challengesSec.appendChild(challengeDiv);
+          });
+      })
+      .catch(error => console.error('Error fetching challenges:', error));
+});

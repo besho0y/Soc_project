@@ -1,4 +1,4 @@
-from flask import Flask, flash, json, redirect, render_template, request, url_for, session
+from flask import Flask, flash, json, jsonify, redirect, render_template, request, url_for, session
 import sqlite3
 
 app = Flask(__name__)
@@ -190,6 +190,42 @@ def user_profile():
                            total_scenarios=total_scenarios, 
                            total_challenges=total_challenges, 
                            lvl=lvl)
+
+
+
+
+
+
+
+
+
+@app.route("/api/challenges")
+def get_challenges():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT title, description, points, duration, lvl FROM challenges")  # Adjust the query as needed
+    challenges = cursor.fetchall()
+    conn.close()
+
+    # Convert the challenges to a list of dictionaries
+    challenges_list = []
+    for challenge in challenges:
+        challenges_list.append({
+            "title": challenge["title"],
+            "description": challenge["description"],
+            "points": challenge["points"],
+            "duration": challenge["duration"],
+            "lvl": challenge["lvl"]
+        })
+
+    return jsonify(challenges_list)  
+
+
+
+
+
+
+
 
 
 
