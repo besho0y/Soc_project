@@ -49,21 +49,36 @@ def home():
 def scenario():
     if 'user' not in session:
         return redirect(url_for('login'))
-    return render_template("homepage/scenariospage.html")
+    
+    email = session['user']
+    user_data = get_user_data(email)
+    username = user_data['username'] if user_data else "Guest"
+    
+    return render_template("homepage/scenariospage.html", username=username)
 
 # Challenges page
 @app.route("/challenges")
 def challenges():
     if 'user' not in session:
         return redirect(url_for('login'))
-    return render_template("homepage/challengespage.html")
+    
+    email = session['user']
+    user_data = get_user_data(email)
+    username = user_data['username'] if user_data else "Guest"
+    
+    return render_template("homepage/challengespage.html", username=username)
 
 # Achievements page
 @app.route("/achievement")
 def achievement():
     if 'user' not in session:
         return redirect(url_for('login'))
-    return render_template("homepage/achievementpage.html")
+    
+    email = session['user']
+    user_data = get_user_data(email)
+    username = user_data['username'] if user_data else "Guest"
+    
+    return render_template("homepage/achievementpage.html", username=username)
 
 
 
