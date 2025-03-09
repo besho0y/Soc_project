@@ -226,6 +226,33 @@ def get_challenges():
 
 
 
+@app.route("/api/scenarios")
+def get_scenarios():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT title, points, description, lvl, img FROM scenarios")  # Adjust the query as needed
+    scenarios = cursor.fetchall()
+    conn.close()
+
+    # Convert the scenarios to a list of dictionaries
+    scenarios_list = []
+    for scenario in scenarios:
+        # Ensure that img is a string (path) and not bytes
+        img_path = scenario["img"].decode('utf-8') if isinstance(scenario["img"], bytes) else scenario["img"]
+        
+        scenarios_list.append({
+            "title": scenario["title"],
+            "description": scenario["description"],
+            "points": scenario["points"],
+            "lvl": scenario["lvl"],
+            "img": img_path  # Ensure this is a string path
+        })
+    print(scenarios_list)  # This will show you the data structure before serialization
+
+    return jsonify(scenarios_list)
+
+
+
 
 
 

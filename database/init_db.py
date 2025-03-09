@@ -36,6 +36,17 @@ CREATE TABLE IF NOT EXISTS scenarios (
     img TEXT
 )
 ''')
+cursor.execute('''CREATE TABLE done_scenarios (
+    id SERIAL PRIMARY KEY,
+    scenario_id INT NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    lvl VARCHAR(50) NOT NULL,
+    points INT NOT NULL,
+    description TEXT,
+    img TEXT,
+    user_id INT REFERENCES users(id), -- Assuming you have a users table
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)''')
 
 conn.commit()
 conn.close()

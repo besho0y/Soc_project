@@ -81,3 +81,50 @@ document.addEventListener("DOMContentLoaded", function() {
       })
       .catch(error => console.error('Error fetching challenges:', error));
 });
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  fetch('/api/scenarios')
+      .then(response => {
+          if (!response.ok) {
+              throw new Error('Network response was not ok ' + response.statusText);
+          }
+          return response.json();
+      })
+      .then(data => {
+          const scenariosDiv = document.querySelector('.scenarios');
+
+          // Clear existing content if needed
+          scenariosDiv.innerHTML = '';
+
+          // Loop through the scenarios data and create divs
+          data.forEach(scenario => {
+              const scenarioBox = document.createElement('div');
+              scenarioBox.classList.add('scenario-box');
+
+              // Create the inner structure with background image
+              scenarioBox.innerHTML = `
+                  <div class="scenario-img" style="background-image: url('${scenario.img}');">
+                      <h3 class="scenario-title">${scenario.title}</h3>
+                      <h4 class="scenario-lvl">${scenario.lvl}</h4>
+                      <h4 class="scenario-points">${scenario.points}</h4>
+                  </div>
+                  <div class="Scenario-text-box">
+                      <p class="scenarios-des">${scenario.description}</p>
+                      <p>Most Defenders considered this Investigation <span>${scenario.lvl}</span></p>
+                      <button class="scenario-btn">Start Scenario</button>
+                  </div>
+              `;
+
+              scenariosDiv.appendChild(scenarioBox);
+          });
+      })
+      .catch(error => console.error('Error fetching scenarios:', error));
+});
+
+
+
+
+
+
+
