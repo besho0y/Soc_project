@@ -1,0 +1,259 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+  color: white;
+}
+
+html, body {
+  background-color: rgb(15,17,46) !important;
+}
+
+/* Header Styles */
+header {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  background-color: rgb(6, 9, 44);
+  color: white;
+  text-align: center;
+  line-height: 60px;
+  z-index: 1000;
+  padding: 0 20px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+header h1 {
+  font-size: 45px;
+  background-image: url(../images/headerbackground.jpg);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  font-weight: bolder;
+  letter-spacing: 4px;
+  margin-top: 8px;
+  flex: 1;
+  margin-right: -185px;
+}
+
+/* Header Menu */
+.header-menu {
+  flex: 2;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.menu-list {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  margin: 0;
+  padding: 0;
+}
+
+.menu-list li {
+  display: flex;
+  align-items: center;
+}
+
+.menu-list li a {
+  text-decoration: none;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.menu-list li a:hover {
+  color: rgb(18, 93, 118);
+}
+.login-btn i:hover{
+  color: rgb(18, 93, 118);
+}
+
+
+
+/* Hamburger Menu */
+.hamburger {
+  display: none; /* Hidden by default */
+  flex-direction: column;
+  cursor: pointer;
+  gap: 5px;
+}
+
+.hamburger .bar {
+  width: 25px;
+  height: 3px;
+  background-color: white;
+  transition: 0.3s;
+}
+
+/* Show Hamburger Menu on Smaller Screens */
+@media (max-width: 768px) {
+  .hamburger {
+    display: flex; /* Show hamburger menu on mobile */
+  }
+
+  .menu-list {
+    display: none; /* Hide menu list by default on mobile */
+    flex-direction: column;
+    position: absolute;
+    top: 80px;
+    right: 0;
+    background-color: rgb(6, 9, 44);
+    width: 100%;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .menu-list.active {
+    display: flex; 
+  }
+}
+
+
+
+
+@media (max-width: 768px) {
+  .header-menu {
+    justify-content: flex-end;
+  }
+
+  .menu-list {
+    display: none; /* Hide menu list by default on mobile */
+    flex-direction: column;
+    position: absolute;
+    top: 80px;
+    right: 0;
+    background-color: rgb(6, 9, 44);
+    width: 100%;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .menu-list.active {
+    display: flex; /* Show menu list when active */
+  }
+
+  .menu-list li {
+    margin: 10px 0;
+  }
+
+  .hamburger {
+    display: flex; /* Show hamburger menu on mobile */
+  }
+
+  .login-btn {
+    margin-left: auto; 
+  }
+}
+
+@media (max-width: 480px) {
+  header h1 {
+    font-size: 28px; /* Smaller font size for mobile */
+  }
+
+  .menu-list li a {
+    font-size: 14px; /* Smaller font size for menu items */
+  }
+}
+section {
+  width: 100%;
+  padding: 20px;
+}
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1e1e2f;
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(17, 61, 106);
+  border-radius: 8px;
+}
+
+/* --- Scenario HTML Content Customization --- */
+.scenario-html-content {
+  background: #181a1b;
+  color: #f1f1f1;
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 900px;
+  margin: 0 auto;
+  overflow-x: auto;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+}
+
+/* Remove GitBook navigation/header/footer and unwanted elements */
+.scenario-html-content .gitbook-link,
+.scenario-html-content .gitbook-header,
+.scenario-html-content .gitbook-footer,
+.scenario-html-content [class*='Header'],
+.scenario-html-content [class*='Footer'],
+.scenario-html-content a[href*='gitbook.io'],
+.scenario-html-content a[href*='Home-Lab-Attack-and-Defense-Scenarios'],
+.scenario-html-content nav,
+.scenario-html-content .navigation,
+.scenario-html-content .pagination,
+.scenario-html-content [class*='ButtonGroup'],
+.scenario-html-content a[href*='previous'],
+.scenario-html-content a[href*='next'] {
+  display: none !important;
+}
+
+/* Force all text to be visible on dark background */
+.scenario-html-content, 
+.scenario-html-content * {
+  color: #f1f1f1 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Style code blocks for dark mode */
+.scenario-html-content pre, 
+.scenario-html-content code {
+  background: #222 !important;
+  color: #fffa !important;
+  border-radius: 6px;
+  padding: 0.5em 1em;
+}
+
+/* Custom navigation buttons for scenarios */
+.scenario-nav-buttons {
+  margin-top: 2rem;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+}
+.scenario-nav-buttons .btn {
+  background: #2563eb;
+  color: #fff;
+  border-radius: 6px;
+  padding: 10px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  transition: background 0.18s;
+  text-decoration: none;
+  margin: 0 8px;
+}
+.scenario-nav-buttons .btn-secondary {
+  background: #23264a;
+}
+.scenario-nav-buttons .btn:hover {
+  background: #1e293b;
+}

@@ -1,0 +1,829 @@
+{% extends "homepage/homelayout.html"%}
+{% block content %}
+
+<div class="profile-page">
+    <div class="profile-header">
+        <div class="profile-hero">
+            <div class="profile-avatar">
+                <img src="../static/images/me.jpg" alt="Profile Picture" class="avatar-img">
+                <div class="avatar-overlay">
+                    <i class="fas fa-camera"></i>
+                </div>
+            </div>
+            <div class="profile-info">
+                <h1 class="profile-name">{{ username }}</h1>
+                <div class="profile-badges">
+                    <span class="level-badge {{ level_color }}">
+                        <i class="fas fa-shield-alt"></i>
+                        {{ user_level }}
+                    </span>
+                    <span class="points-badge">
+                        <i class="fas fa-star"></i>
+                        {{ points }}/{{ total_possible_points }} Points
+                    </span>
+                </div>
+                <p class="profile-subtitle">
+                    {% if user_level == 'Beginner' %}
+                    Cybersecurity Defender in Training
+                    {% elif user_level == 'Intermediate' %}
+                    Cybersecurity Specialist
+                    {% else %}
+                    Cybersecurity Expert
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile-content">
+        <!-- Statistics Dashboard -->
+        <div class="profile-stats">
+            <div class="stat-card scenarios-stat">
+                <div class="stat-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-number">{{ total_scenarios }}</div>
+                    <div class="stat-label">Scenarios Completed</div>
+                    <div class="stat-progress">
+                        <div class="progress-bar" data-progress="{{ (total_scenarios / 7 * 100)|round }}"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stat-card challenges-stat">
+                <div class="stat-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-number">{{ total_challenges }}</div>
+                    <div class="stat-label">Challenges Completed</div>
+                    <div class="stat-progress">
+                        <div class="progress-bar" data-progress="{{ (total_challenges / 7 * 100)|round }}"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stat-card points-stat">
+                <div class="stat-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-number">{{ points }}</div>
+                    <div class="stat-label">Total Points</div>
+                    <div class="stat-progress">
+                        <div class="progress-bar" data-progress="{{ points_percentage|round }}"></div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="profile-main-content">
+            <!-- Recent Activity Section -->
+            <div class="content-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <i class="fas fa-clock"></i>
+                        Recent Activity
+                    </h2>
+                </div>
+                <div class="activity-card">
+                    {% if recent_activity %}
+                    <div class="activity-item featured">
+                        <div class="activity-icon">
+                            {% if activity_type == 'scenario' %}
+                            <i class="fas fa-search"></i>
+                            {% else %}
+                            <i class="fas fa-trophy"></i>
+                            {% endif %}
+                        </div>
+                        <div class="activity-content">
+                            <h3 class="activity-title">
+                                {% if activity_type == 'scenario' %}
+                                {{ recent_activity.title }}
+                                {% else %}
+                                {{ recent_activity.title }} Challenge
+                                {% endif %}
+                            </h3>
+                            <p class="activity-description">
+                                {% if activity_type == 'scenario' %}
+                                {{ recent_activity.description }}
+                                {% else %}
+                                Completed the {{ recent_activity.title }} challenge and earned {{ recent_activity.points
+                                }} points!
+                                {% endif %}
+                            </p>
+                            <div class="activity-meta">
+                                <span class="difficulty-badge {{ recent_activity.lvl.lower() }}">{{ recent_activity.lvl
+                                    }}</span>
+                                <span class="activity-time">
+                                    <i class="fas fa-check-circle"></i>
+                                    {% if activity_type == 'scenario' %}
+                                    Scenario Completed
+                                    {% else %}
+                                    Challenge Completed
+                                    {% endif %}
+                                </span>
+                                <span class="points-earned">
+                                    <i class="fas fa-star"></i>
+                                    +{{ recent_activity.points }} pts
+                                </span>
+                            </div>
+                        </div>
+                        <div class="activity-action">
+                            {% if activity_type == 'scenario' %}
+                            <a href="/scenario/{{ recent_activity.slug }}" class="view-btn">
+                                <i class="fas fa-eye"></i>
+                                View Scenario
+                            </a>
+                            {% else %}
+                            <a href="/challenges" class="view-btn">
+                                <i class="fas fa-trophy"></i>
+                                View Challenges
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="activity-item no-activity">
+                        <div class="activity-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="activity-content">
+                            <h3 class="activity-title">No Recent Activity</h3>
+                            <p class="activity-description">
+                                Start your first cybersecurity scenario or challenge to see your activity here.
+                            </p>
+                            <div class="activity-meta">
+                                <span class="activity-time">
+                                    <i class="fas fa-info-circle"></i>
+                                    Get started today!
+                                </span>
+                            </div>
+                        </div>
+                        <div class="activity-action">
+                            <a href="/scenario" class="start-btn">
+                                <i class="fas fa-play"></i>
+                                Start Learning
+                            </a>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Progress Overview Section -->
+            <div class="content-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <i class="fas fa-chart-line"></i>
+                        Progress Overview
+                    </h2>
+                </div>
+                <div class="progress-overview">
+                    <div class="progress-item">
+                        <div class="progress-header">
+                            <span class="progress-label">Scenarios Progress</span>
+                            <span class="progress-value">{{ total_scenarios }}/7</span>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar scenarios-progress"
+                                data-progress="{{ (total_scenarios / 7 * 100)|round }}"></div>
+                        </div>
+                        <div class="progress-details">
+                            <span class="progress-text">{{ (total_scenarios / 7 * 100)|round }}% Complete</span>
+                        </div>
+                    </div>
+
+                    <div class="progress-item">
+                        <div class="progress-header">
+                            <span class="progress-label">Challenges Progress</span>
+                            <span class="progress-value">{{ total_challenges }}/7</span>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar challenges-progress"
+                                data-progress="{{ (total_challenges / 7 * 100)|round }}"></div>
+                        </div>
+                        <div class="progress-details">
+                            <span class="progress-text">{{ (total_challenges / 7 * 100)|round }}% Complete</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions Section -->
+            <div class="content-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <i class="fas fa-bolt"></i>
+                        Quick Actions
+                    </h2>
+                </div>
+                <div class="quick-actions-grid">
+                    <a href="/scenario" class="action-card scenarios-action">
+                        <div class="action-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <div class="action-content">
+                            <h3>Continue Learning</h3>
+                            <p>Explore new scenarios</p>
+                        </div>
+                    </a>
+
+                    <a href="/challenges" class="action-card challenges-action">
+                        <div class="action-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div class="action-content">
+                            <h3>Take Challenge</h3>
+                            <p>Test your knowledge</p>
+                        </div>
+                    </a>
+
+                    <a href="/achievement" class="action-card achievements-action">
+                        <div class="action-icon">
+                            <i class="fas fa-medal"></i>
+                        </div>
+                        <div class="action-content">
+                            <h3>View Achievements</h3>
+                            <p>See your progress</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .profile-page {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .profile-header {
+        margin-bottom: 40px;
+    }
+
+    .profile-hero {
+        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        border-radius: 20px;
+        padding: 40px;
+        display: flex;
+        align-items: center;
+        gap: 30px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .profile-hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%23334155" stroke-width="0.5" opacity="0.3"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+        opacity: 0.1;
+    }
+
+    .profile-avatar {
+        position: relative;
+        z-index: 1;
+    }
+
+    .avatar-img {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        border: 4px solid #2563eb;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    .avatar-overlay {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 40px;
+        height: 40px;
+        background: #2563eb;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: 3px solid #0f172a;
+    }
+
+    .avatar-overlay:hover {
+        background: #1e40af;
+        transform: scale(1.1);
+    }
+
+    .profile-info {
+        flex: 1;
+        position: relative;
+        z-index: 1;
+    }
+
+    .profile-name {
+        font-size: 3rem;
+        font-weight: 800;
+        color: #e5e7eb;
+        margin: 0 0 16px 0;
+        line-height: 1.2;
+    }
+
+    .profile-badges {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 12px;
+        flex-wrap: wrap;
+    }
+
+    .level-badge,
+    .points-badge {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        border-radius: 25px;
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+
+    .level-badge {
+        background: linear-gradient(135deg, #10b981, #059669);
+        color: white;
+    }
+
+    .level-badge.beginner {
+        background: linear-gradient(135deg, #6b7280, #4b5563);
+    }
+
+    .level-badge.intermediate {
+        background: linear-gradient(135deg, #f59e0b, #d97706);
+    }
+
+    .level-badge.advanced {
+        background: linear-gradient(135deg, #10b981, #059669);
+    }
+
+    .points-badge {
+        background: linear-gradient(135deg, #f59e0b, #d97706);
+        color: white;
+    }
+
+    .profile-subtitle {
+        color: #cbd5e1;
+        font-size: 1.2rem;
+        margin: 0;
+        opacity: 0.8;
+    }
+
+    .profile-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 24px;
+        margin-bottom: 40px;
+    }
+
+    .stat-card {
+        background: #181c2f;
+        border-radius: 16px;
+        padding: 28px;
+        border: 1px solid #23264a;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .stat-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #2563eb, #3b82f6);
+    }
+
+    .stat-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 40px rgba(37, 99, 235, 0.15);
+        border-color: #2563eb;
+    }
+
+    .stat-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+        color: white;
+        flex-shrink: 0;
+    }
+
+    .scenarios-stat .stat-icon {
+        background: linear-gradient(135deg, #2563eb, #1e40af);
+    }
+
+    .challenges-stat .stat-icon {
+        background: linear-gradient(135deg, #f59e0b, #d97706);
+    }
+
+    .points-stat .stat-icon {
+        background: linear-gradient(135deg, #10b981, #059669);
+    }
+
+
+
+    .stat-content {
+        flex: 1;
+    }
+
+    .stat-number {
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: #e5e7eb;
+        margin-bottom: 4px;
+    }
+
+    .stat-label {
+        color: #9ca3af;
+        font-size: 1rem;
+        margin-bottom: 12px;
+    }
+
+    .stat-progress {
+        width: 100%;
+        height: 6px;
+        background: #23264a;
+        border-radius: 3px;
+        overflow: hidden;
+    }
+
+    .progress-bar {
+        height: 100%;
+        background: linear-gradient(90deg, #2563eb, #3b82f6);
+        border-radius: 3px;
+        transition: width 0.8s ease;
+    }
+
+    .profile-main-content {
+        display: grid;
+        gap: 30px;
+    }
+
+    .content-section {
+        background: #181c2f;
+        border-radius: 20px;
+        border: 1px solid #23264a;
+        overflow: hidden;
+    }
+
+    .section-header {
+        background: linear-gradient(135deg, #2563eb, #1e40af);
+        padding: 20px 30px;
+    }
+
+    .section-title {
+        color: white;
+        font-size: 1.4rem;
+        font-weight: 700;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .activity-card {
+        padding: 30px;
+    }
+
+    .activity-item {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        padding: 24px;
+        background: #23264a;
+        border-radius: 16px;
+        border: 1px solid #374151;
+        transition: all 0.3s ease;
+    }
+
+    .activity-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(37, 99, 235, 0.15);
+        border-color: #2563eb;
+    }
+
+    .activity-icon {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #2563eb, #1e40af);
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.5rem;
+        flex-shrink: 0;
+    }
+
+    .activity-content {
+        flex: 1;
+    }
+
+    .activity-title {
+        color: #e5e7eb;
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin: 0 0 8px 0;
+    }
+
+    .activity-description {
+        color: #9ca3af;
+        margin: 0 0 12px 0;
+        line-height: 1.5;
+    }
+
+    .activity-meta {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .difficulty-badge {
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+    .difficulty-badge.easy {
+        background: #22c55e;
+        color: #0f1419;
+    }
+
+    .difficulty-badge.medium {
+        background: #fbbf24;
+        color: #0f1419;
+    }
+
+    .difficulty-badge.hard {
+        background: #ef4444;
+        color: white;
+    }
+
+    .activity-time {
+        color: #6b7280;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .points-earned {
+        color: #f59e0b;
+        font-size: 0.9rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .activity-action {
+        flex-shrink: 0;
+    }
+
+    .start-btn,
+    .view-btn {
+        background: linear-gradient(135deg, #2563eb, #1e40af);
+        color: white;
+        text-decoration: none;
+        padding: 12px 24px;
+        border-radius: 10px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .view-btn {
+        background: linear-gradient(135deg, #10b981, #059669);
+    }
+
+    .start-btn:hover,
+    .view-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
+    }
+
+    .view-btn:hover {
+        background: linear-gradient(135deg, #059669, #047857);
+        box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+    }
+
+    .no-activity .activity-icon {
+        background: linear-gradient(135deg, #6b7280, #4b5563);
+    }
+
+    .no-activity .activity-title {
+        color: #9ca3af;
+    }
+
+    .no-activity .activity-description {
+        color: #6b7280;
+    }
+
+    .progress-overview {
+        padding: 30px;
+        display: grid;
+        gap: 24px;
+    }
+
+    .progress-item {
+        background: #23264a;
+        border-radius: 16px;
+        padding: 24px;
+        border: 1px solid #374151;
+    }
+
+    .progress-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+    }
+
+    .progress-label {
+        color: #e5e7eb;
+        font-weight: 600;
+        font-size: 1.1rem;
+    }
+
+    .progress-value {
+        color: #2563eb;
+        font-weight: 700;
+        font-size: 1.2rem;
+    }
+
+    .progress-bar-container {
+        width: 100%;
+        height: 8px;
+        background: #374151;
+        border-radius: 4px;
+        overflow: hidden;
+        margin-bottom: 8px;
+    }
+
+    .scenarios-progress {
+        background: linear-gradient(90deg, #2563eb, #3b82f6);
+    }
+
+    .challenges-progress {
+        background: linear-gradient(90deg, #f59e0b, #d97706);
+    }
+
+    .progress-details {
+        text-align: right;
+    }
+
+    .progress-text {
+        color: #9ca3af;
+        font-size: 0.9rem;
+    }
+
+    .quick-actions-grid {
+        padding: 30px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+    }
+
+    .action-card {
+        background: #23264a;
+        border: 1px solid #374151;
+        border-radius: 16px;
+        padding: 24px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        text-align: center;
+    }
+
+    .action-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 40px rgba(37, 99, 235, 0.15);
+        border-color: #2563eb;
+    }
+
+    .action-card .action-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        color: white;
+        margin: 0 auto 16px auto;
+    }
+
+    .scenarios-action .action-icon {
+        background: linear-gradient(135deg, #2563eb, #1e40af);
+    }
+
+    .challenges-action .action-icon {
+        background: linear-gradient(135deg, #f59e0b, #d97706);
+    }
+
+    .achievements-action .action-icon {
+        background: linear-gradient(135deg, #10b981, #059669);
+    }
+
+    .action-card h3 {
+        color: #e5e7eb;
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin: 0 0 8px 0;
+    }
+
+    .action-card p {
+        color: #9ca3af;
+        margin: 0;
+        font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+        .profile-page {
+            padding: 10px;
+        }
+
+        .profile-hero {
+            flex-direction: column;
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        .profile-name {
+            font-size: 2rem;
+        }
+
+        .profile-stats {
+            grid-template-columns: 1fr;
+        }
+
+        .activity-item {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .quick-actions-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .profile-name {
+            font-size: 1.5rem;
+        }
+
+        .profile-badges {
+            justify-content: center;
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Animate progress bars
+        const progressBars = document.querySelectorAll('.progress-bar');
+        progressBars.forEach(bar => {
+            const progress = bar.getAttribute('data-progress');
+            setTimeout(() => {
+                bar.style.width = progress + '%';
+            }, 500);
+        });
+    });
+</script>
+
+{% endblock %}

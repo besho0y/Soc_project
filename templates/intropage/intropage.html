@@ -1,0 +1,935 @@
+{% extends "intropage/layout.html"%}
+{% block content %}
+
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="hero-content">
+        <div class="hero-text">
+            <h1 class="hero-title">Master Cybersecurity with <span class="brand-highlight">Socademy</span></h1>
+            <p class="hero-subtitle">Experience real-world cyber threats in a safe, controlled environment. Practice
+                incident response, threat hunting, and digital forensics through hands-on scenarios.</p>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number">7</span>
+                    <span class="stat-label">Interactive Scenarios</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">1,560</span>
+                    <span class="stat-label">Points Available</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">24/7</span>
+                    <span class="stat-label">Access</span>
+                </div>
+            </div>
+            <div class="hero-actions">
+                <a href="/signup" class="cta-primary">Start Learning</a>
+                <a href="#scenarios" class="cta-secondary">Explore Scenarios</a>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="security-shield">
+                <i class="fas fa-shield-alt"></i>
+                <div class="shield-pulse"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features-section" id="about">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Why Choose <span class="brand-highlight">Socademy</span>?</h2>
+            <p class="section-subtitle">Comprehensive cybersecurity training through realistic, hands-on experiences</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                <h3>Real-World Scenarios</h3>
+                <p>Practice with authentic cyber attack simulations based on actual incidents from the field. Learn to
+                    investigate, analyze, and respond to threats.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <h3>Interactive Challenges</h3>
+                <p>Test your knowledge with comprehensive quizzes covering incident response, threat analysis, and
+                    cybersecurity best practices.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3>Progress Tracking</h3>
+                <p>Monitor your learning journey with detailed analytics, achievement badges, and skill progression
+                    indicators.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3>Professional Development</h3>
+                <p>Build industry-relevant skills that employers value. Perfect for SOC analysts, incident responders,
+                    and security professionals.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Scenarios Section -->
+<section class="scenarios-section" id="scenarios">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Featured <span class="brand-highlight">Scenarios</span></h2>
+            <p class="section-subtitle">Investigate real-world cyber incidents and master threat detection</p>
+        </div>
+
+        <div class="scenarios-grid">
+            <div class="scenario-card featured">
+                <div class="scenario-image">
+                    <img src="../static/images/pass-the-hash.png" alt="Pass-the-Hash Attack">
+                    <div class="scenario-badge">Featured</div>
+                </div>
+                <div class="scenario-content">
+                    <div class="scenario-meta">
+                        <span class="difficulty medium">Medium</span>
+                        <span class="points">100 pts</span>
+                    </div>
+                    <h3>Pass-the-Hash Attack Investigation</h3>
+                    <p>Investigate a sophisticated lateral movement attack where adversaries used stolen NTLM hashes to
+                        compromise multiple systems across the network.</p>
+                    <div class="scenario-skills">
+                        <span class="skill-tag">Windows Security</span>
+                        <span class="skill-tag">Network Analysis</span>
+                        <span class="skill-tag">Incident Response</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="scenario-card">
+                <div class="scenario-image">
+                    <img src="../static/images/kerberoasting.png" alt="Kerberoasting Attack">
+                </div>
+                <div class="scenario-content">
+                    <div class="scenario-meta">
+                        <span class="difficulty hard">Hard</span>
+                        <span class="points">120 pts</span>
+                    </div>
+                    <h3>Kerberoasting Attack & Defense</h3>
+                    <p>Analyze a Kerberos ticket-granting service attack and implement proper defenses to prevent
+                        service account compromise.</p>
+                    <div class="scenario-skills">
+                        <span class="skill-tag">Active Directory</span>
+                        <span class="skill-tag">Kerberos</span>
+                        <span class="skill-tag">Threat Hunting</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="scenario-card">
+                <div class="scenario-image">
+                    <img src="../static/images/task.png" alt="Scheduled Task Attack">
+                </div>
+                <div class="scenario-content">
+                    <div class="scenario-meta">
+                        <span class="difficulty easy">Easy</span>
+                        <span class="points">80 pts</span>
+                    </div>
+                    <h3>Scheduled Task Attack & Defense</h3>
+                    <p>Investigate how attackers abuse Windows Task Scheduler for persistence and privilege escalation
+                        in enterprise environments.</p>
+                    <div class="scenario-skills">
+                        <span class="skill-tag">Windows Persistence</span>
+                        <span class="skill-tag">Task Scheduler</span>
+                        <span class="skill-tag">Detection</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="scenario-card">
+                <div class="scenario-image">
+                    <img src="../static/images/password-spraying.jpeg" alt="Password Spraying Attack">
+                </div>
+                <div class="scenario-content">
+                    <div class="scenario-meta">
+                        <span class="difficulty easy">Easy</span>
+                        <span class="points">90 pts</span>
+                    </div>
+                    <h3>Password Spraying Investigation</h3>
+                    <p>Analyze a password spraying attack where adversaries attempted to compromise multiple accounts
+                        using common passwords.</p>
+                    <div class="scenario-skills">
+                        <span class="skill-tag">Authentication</span>
+                        <span class="skill-tag">Log Analysis</span>
+                        <span class="skill-tag">Brute Force</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="scenarios-cta">
+            <a href="/signup" class="cta-primary">Start Your First Investigation</a>
+        </div>
+    </div>
+</section>
+
+<!-- Challenges Section -->
+<section class="challenges-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Knowledge <span class="brand-highlight">Challenges</span></h2>
+            <p class="section-subtitle">Test your cybersecurity expertise with comprehensive quizzes</p>
+        </div>
+
+        <div class="challenges-preview">
+            <div class="challenge-category">
+                <div class="category-icon">
+                    <i class="fas fa-network-wired"></i>
+                </div>
+                <h3>Network Security</h3>
+                <ul class="challenge-list">
+                    <li>Network Traffic Analysis</li>
+                    <li>Intrusion Detection Systems</li>
+                    <li>Firewall Configuration</li>
+                    <li>VPN Security Assessment</li>
+                </ul>
+            </div>
+
+            <div class="challenge-category">
+                <div class="category-icon">
+                    <i class="fas fa-bug"></i>
+                </div>
+                <h3>Malware Analysis</h3>
+                <ul class="challenge-list">
+                    <li>Static Malware Analysis</li>
+                    <li>Dynamic Behavior Analysis</li>
+                    <li>Reverse Engineering Basics</li>
+                    <li>Indicator Extraction</li>
+                </ul>
+            </div>
+
+            <div class="challenge-category">
+                <div class="category-icon">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+                <h3>Identity & Access</h3>
+                <ul class="challenge-list">
+                    <li>Active Directory Security</li>
+                    <li>Privilege Escalation</li>
+                    <li>Authentication Protocols</li>
+                    <li>Access Control Models</li>
+                </ul>
+            </div>
+
+            <div class="challenge-category">
+                <div class="category-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                <h3>Digital Forensics</h3>
+                <ul class="challenge-list">
+                    <li>File System Analysis</li>
+                    <li>Memory Forensics</li>
+                    <li>Timeline Analysis</li>
+                    <li>Evidence Preservation</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Learning Path Section -->
+<section class="learning-path-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Your Learning <span class="brand-highlight">Journey</span></h2>
+            <p class="section-subtitle">Progress from beginner to expert with our structured learning path</p>
+        </div>
+
+        <div class="learning-path">
+            <div class="path-step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>Foundation</h3>
+                    <p>Start with basic cybersecurity concepts and easy scenarios</p>
+                    <div class="step-scenarios">
+                        <span>Password Spraying</span>
+                        <span>Scheduled Tasks</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="path-step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>Intermediate</h3>
+                    <p>Tackle more complex attacks and defense mechanisms</p>
+                    <div class="step-scenarios">
+                        <span>Pass-the-Hash</span>
+                        <span>AS-REProasting</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="path-step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>Advanced</h3>
+                    <p>Master sophisticated attack techniques and forensics</p>
+                    <div class="step-scenarios">
+                        <span>Golden Ticket</span>
+                        <span>DCSync</span>
+                        <span>Kerberoasting</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-content">
+            <h2>Ready to Become a Cybersecurity Expert?</h2>
+            <p>Join thousands of security professionals who trust Socademy for their cybersecurity training</p>
+            <div class="cta-actions">
+                <a href="/signup" class="cta-primary large">Get Started Free</a>
+                <a href="/login" class="cta-secondary large">Sign In</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        line-height: 1.6;
+        color: #e5e7eb;
+        background: #0f172a;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    /* Hero Section */
+    .hero-section {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%23334155" stroke-width="0.5" opacity="0.2"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+    }
+
+    .hero-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .hero-text {
+        flex: 1;
+        max-width: 600px;
+    }
+
+    .hero-title {
+        font-size: 4rem;
+        font-weight: 800;
+        line-height: 1.1;
+        margin-bottom: 24px;
+        color: #f8fafc;
+    }
+
+    .brand-highlight {
+        background: linear-gradient(135deg, #2563eb, #3b82f6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .hero-subtitle {
+        font-size: 1.25rem;
+        color: #cbd5e1;
+        margin-bottom: 32px;
+        line-height: 1.7;
+    }
+
+    .hero-stats {
+        display: flex;
+        gap: 40px;
+        margin-bottom: 40px;
+    }
+
+    .stat-item {
+        text-align: center;
+    }
+
+    .stat-number {
+        display: block;
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #2563eb;
+        line-height: 1;
+    }
+
+    .stat-label {
+        font-size: 0.9rem;
+        color: #94a3b8;
+        margin-top: 4px;
+    }
+
+    .hero-actions {
+        display: flex;
+        gap: 16px;
+    }
+
+    .cta-primary,
+    .cta-secondary {
+        padding: 16px 32px;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .cta-primary {
+        background: linear-gradient(135deg, #2563eb, #1e40af);
+        color: white;
+        box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
+    }
+
+    .cta-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 35px rgba(37, 99, 235, 0.4);
+    }
+
+    .cta-secondary {
+        background: transparent;
+        color: #e5e7eb;
+        border: 2px solid #374151;
+    }
+
+    .cta-secondary:hover {
+        border-color: #2563eb;
+        color: #2563eb;
+    }
+
+    .hero-visual {
+        flex: 0 0 300px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .security-shield {
+        width: 200px;
+        height: 200px;
+        background: linear-gradient(135deg, #2563eb, #1e40af);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 4rem;
+        color: white;
+        position: relative;
+        animation: float 3s ease-in-out infinite;
+    }
+
+    .shield-pulse {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        border: 2px solid #2563eb;
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes float {
+
+        0%,
+        100% {
+            transform: translateY(0px);
+        }
+
+        50% {
+            transform: translateY(-20px);
+        }
+    }
+
+    @keyframes pulse {
+        0% {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        100% {
+            transform: scale(1.5);
+            opacity: 0;
+        }
+    }
+
+    /* Section Styles */
+    .section-header {
+        text-align: center;
+        margin-bottom: 60px;
+    }
+
+    .section-title {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 16px;
+        color: #f8fafc;
+    }
+
+    .section-subtitle {
+        font-size: 1.2rem;
+        color: #94a3b8;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    /* Features Section */
+    .features-section {
+        padding: 100px 0;
+        background: #1e293b;
+    }
+
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 32px;
+    }
+
+    .feature-card {
+        background: #0f172a;
+        border-radius: 16px;
+        padding: 32px;
+        border: 1px solid #334155;
+        transition: all 0.3s ease;
+        text-align: center;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-8px);
+        border-color: #2563eb;
+        box-shadow: 0 20px 40px rgba(37, 99, 235, 0.1);
+    }
+
+    .feature-icon {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, #2563eb, #1e40af);
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        color: white;
+        margin: 0 auto 24px;
+    }
+
+    .feature-card h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 16px;
+        color: #f8fafc;
+    }
+
+    .feature-card p {
+        color: #94a3b8;
+        line-height: 1.6;
+    }
+
+    /* Scenarios Section */
+    .scenarios-section {
+        padding: 100px 0;
+        background: #0f172a;
+    }
+
+    .scenarios-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 32px;
+        margin-bottom: 60px;
+    }
+
+    .scenario-card {
+        background: #1e293b;
+        border-radius: 20px;
+        overflow: hidden;
+        border: 1px solid #334155;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+    .scenario-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        border-color: #2563eb;
+    }
+
+    .scenario-card.featured {
+        border-color: #f59e0b;
+        box-shadow: 0 8px 25px rgba(245, 158, 11, 0.2);
+    }
+
+    .scenario-image {
+        height: 200px;
+        background: linear-gradient(135deg, #374151, #1f2937);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .scenario-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .scenario-badge {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        background: #f59e0b;
+        color: #0f172a;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
+    .scenario-content {
+        padding: 24px;
+    }
+
+    .scenario-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+    }
+
+    .difficulty {
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+    .difficulty.easy {
+        background: #22c55e;
+        color: #0f172a;
+    }
+
+    .difficulty.medium {
+        background: #f59e0b;
+        color: #0f172a;
+    }
+
+    .difficulty.hard {
+        background: #ef4444;
+        color: white;
+    }
+
+    .points {
+        background: #2563eb;
+        color: white;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
+    .scenario-card h3 {
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-bottom: 12px;
+        color: #f8fafc;
+    }
+
+    .scenario-card p {
+        color: #94a3b8;
+        line-height: 1.6;
+        margin-bottom: 16px;
+    }
+
+    .scenario-skills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .skill-tag {
+        background: #374151;
+        color: #e5e7eb;
+        padding: 4px 8px;
+        border-radius: 12px;
+        font-size: 0.75rem;
+        font-weight: 500;
+    }
+
+    .scenarios-cta {
+        text-align: center;
+    }
+
+    /* Challenges Section */
+    .challenges-section {
+        padding: 100px 0;
+        background: #1e293b;
+    }
+
+    .challenges-preview {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 32px;
+    }
+
+    .challenge-category {
+        background: #0f172a;
+        border-radius: 16px;
+        padding: 32px;
+        border: 1px solid #334155;
+        transition: all 0.3s ease;
+    }
+
+    .challenge-category:hover {
+        transform: translateY(-4px);
+        border-color: #2563eb;
+    }
+
+    .category-icon {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #2563eb, #1e40af);
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        color: white;
+        margin-bottom: 20px;
+    }
+
+    .challenge-category h3 {
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-bottom: 16px;
+        color: #f8fafc;
+    }
+
+    .challenge-list {
+        list-style: none;
+    }
+
+    .challenge-list li {
+        color: #94a3b8;
+        padding: 8px 0;
+        border-bottom: 1px solid #334155;
+        position: relative;
+        padding-left: 20px;
+    }
+
+    .challenge-list li:before {
+        content: '→';
+        position: absolute;
+        left: 0;
+        color: #2563eb;
+        font-weight: bold;
+    }
+
+    .challenge-list li:last-child {
+        border-bottom: none;
+    }
+
+    /* Learning Path Section */
+    .learning-path-section {
+        padding: 100px 0;
+        background: #0f172a;
+    }
+
+    .learning-path {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 40px;
+        position: relative;
+    }
+
+    .learning-path::before {
+        content: '';
+        position: absolute;
+        top: 40px;
+        left: 40px;
+        right: 40px;
+        height: 2px;
+        background: linear-gradient(90deg, #2563eb, #3b82f6);
+        z-index: 0;
+    }
+
+    .path-step {
+        flex: 1;
+        text-align: center;
+        position: relative;
+        z-index: 1;
+    }
+
+    .step-number {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, #2563eb, #1e40af);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        font-weight: 700;
+        color: white;
+        margin: 0 auto 24px;
+        border: 4px solid #0f172a;
+    }
+
+    .step-content h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 12px;
+        color: #f8fafc;
+    }
+
+    .step-content p {
+        color: #94a3b8;
+        margin-bottom: 16px;
+        line-height: 1.6;
+    }
+
+    .step-scenarios {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .step-scenarios span {
+        background: #374151;
+        color: #e5e7eb;
+        padding: 6px 12px;
+        border-radius: 12px;
+        font-size: 0.85rem;
+        font-weight: 500;
+    }
+
+    /* CTA Section */
+    .cta-section {
+        padding: 100px 0;
+        background: linear-gradient(135deg, #1e293b, #0f172a);
+        text-align: center;
+    }
+
+    .cta-content h2 {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 16px;
+        color: #f8fafc;
+    }
+
+    .cta-content p {
+        font-size: 1.2rem;
+        color: #94a3b8;
+        margin-bottom: 40px;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .cta-actions {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .cta-primary.large,
+    .cta-secondary.large {
+        padding: 20px 40px;
+        font-size: 1.2rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .hero-content {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+        }
+
+        .hero-stats {
+            justify-content: center;
+        }
+
+        .section-title {
+            font-size: 2rem;
+        }
+
+        .learning-path {
+            flex-direction: column;
+            gap: 60px;
+        }
+
+        .learning-path::before {
+            display: none;
+        }
+
+        .cta-actions {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .scenarios-grid,
+        .features-grid,
+        .challenges-preview {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+{% endblock %}

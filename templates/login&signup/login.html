@@ -1,0 +1,475 @@
+{% extends "login&signup/signlayout.html" %}
+{% block content %}
+
+<div class="login-page">
+    <div class="login-container">
+        <div class="login-hero">
+            <div class="hero-content">
+                <div class="brand-section">
+                    <div class="brand-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h1 class="brand-title">Welcome Back</h1>
+                    <p class="brand-subtitle">Sign in to continue your cybersecurity journey</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="login-form-section">
+            <div class="form-container">
+                <div class="form-header">
+                    <h2 class="form-title">Sign In</h2>
+                    <p class="form-subtitle">Enter your credentials to access your account</p>
+                </div>
+
+                <form action="{{ url_for('login') }}" method="POST" class="login-form">
+                    <div class="input-group">
+                        <div class="input-container">
+                            <i class="fas fa-envelope input-icon"></i>
+                            <input type="email" name="email" required class="form-input" placeholder=" ">
+                            <label class="form-label">Email Address</label>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <div class="input-container">
+                            <i class="fas fa-lock input-icon"></i>
+                            <input type="password" name="password" required class="form-input" placeholder=" ">
+                            <label class="form-label">Password</label>
+                        </div>
+                    </div>
+
+                    <div class="form-options">
+                        <label class="checkbox-container">
+                            <input type="checkbox" name="remember">
+                            <span class="checkmark"></span>
+                            <span class="checkbox-text">Remember me</span>
+                        </label>
+                        <a href="#" class="forgot-link">Forgot password?</a>
+                    </div>
+
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span>Sign In</span>
+                    </button>
+
+
+
+                    <div class="form-footer">
+                        <p class="signup-text">
+                            Don't have an account?
+                            <a href="{{ url_for('signup') }}" class="signup-link">Create one here</a>
+                        </p>
+                    </div>
+
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                    <div class="flash-messages">
+                        {% for category, message in messages %}
+                        <div class="flash-message {{ category }}">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <span>{{ message }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    {% endwith %}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .login-page {
+        min-height: 100vh;
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .login-page::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%23334155" stroke-width="0.5" opacity="0.2"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+        opacity: 0.1;
+    }
+
+    .login-container {
+        background: #181c2f;
+        border-radius: 24px;
+        border: 1px solid #23264a;
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        overflow: hidden;
+        width: 100%;
+        max-width: 1000px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        min-height: 600px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .login-hero {
+        background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 60px 40px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .login-hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="white" opacity="0.1"/><circle cx="80" cy="40" r="1" fill="white" opacity="0.1"/><circle cx="40" cy="80" r="1.5" fill="white" opacity="0.1"/></svg>');
+        animation: float 20s ease-in-out infinite;
+    }
+
+    @keyframes float {
+
+        0%,
+        100% {
+            transform: translateY(0px) rotate(0deg);
+        }
+
+        50% {
+            transform: translateY(-20px) rotate(180deg);
+        }
+    }
+
+    .hero-content {
+        text-align: center;
+        position: relative;
+        z-index: 1;
+    }
+
+    .brand-icon {
+        width: 80px;
+        height: 80px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 24px auto;
+        font-size: 2rem;
+        color: white;
+        backdrop-filter: blur(10px);
+        border: 2px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .brand-title {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: white;
+        margin: 0 0 16px 0;
+        line-height: 1.2;
+    }
+
+    .brand-subtitle {
+        font-size: 1.1rem;
+        color: rgba(255, 255, 255, 0.8);
+        margin: 0;
+        line-height: 1.5;
+    }
+
+    .login-form-section {
+        padding: 60px 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .form-container {
+        width: 100%;
+        max-width: 400px;
+    }
+
+    .form-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .form-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #e5e7eb;
+        margin: 0 0 8px 0;
+    }
+
+    .form-subtitle {
+        color: #9ca3af;
+        margin: 0;
+        font-size: 1rem;
+    }
+
+    .login-form {
+        display: grid;
+        gap: 24px;
+    }
+
+    .input-group {
+        position: relative;
+    }
+
+    .input-container {
+        position: relative;
+    }
+
+    .input-icon {
+        position: absolute;
+        left: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #6b7280;
+        font-size: 1.1rem;
+        z-index: 2;
+    }
+
+    .form-input {
+        width: 100%;
+        padding: 16px 16px 16px 48px;
+        background: #23264a;
+        border: 2px solid #374151;
+        border-radius: 12px;
+        color: #e5e7eb;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        outline: none;
+    }
+
+    .form-input:focus {
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    .form-input:focus+.form-label,
+    .form-input:not(:placeholder-shown)+.form-label {
+        transform: translateY(-28px) scale(0.85);
+        color: #2563eb;
+    }
+
+    .form-label {
+        position: absolute;
+        left: 48px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #9ca3af;
+        font-size: 1rem;
+        pointer-events: none;
+        transition: all 0.3s ease;
+        background: #23264a;
+        padding: 0 8px;
+        margin-left: -8px;
+    }
+
+    .form-options {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .checkbox-container {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        color: #cbd5e1;
+        font-size: 0.9rem;
+    }
+
+    .checkbox-container input[type="checkbox"] {
+        display: none;
+    }
+
+    .checkmark {
+        width: 18px;
+        height: 18px;
+        border: 2px solid #374151;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }
+
+    .checkbox-container input[type="checkbox"]:checked+.checkmark {
+        background: #2563eb;
+        border-color: #2563eb;
+    }
+
+    .checkbox-container input[type="checkbox"]:checked+.checkmark::after {
+        content: '✓';
+        color: white;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .forgot-link {
+        color: #2563eb;
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 600;
+        transition: color 0.3s ease;
+    }
+
+    .forgot-link:hover {
+        color: #3b82f6;
+    }
+
+    .submit-btn {
+        background: linear-gradient(135deg, #2563eb, #1e40af);
+        color: white;
+        border: none;
+        padding: 16px 24px;
+        border-radius: 12px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .submit-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.5s ease;
+    }
+
+    .submit-btn:hover::before {
+        left: 100%;
+    }
+
+    .submit-btn:hover {
+        background: linear-gradient(135deg, #1e40af, #1e3a8a);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
+    }
+
+
+
+    .form-footer {
+        text-align: center;
+    }
+
+    .signup-text {
+        color: #9ca3af;
+        margin: 0;
+        font-size: 0.9rem;
+    }
+
+    .signup-link {
+        color: #2563eb;
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.3s ease;
+    }
+
+    .signup-link:hover {
+        color: #3b82f6;
+        text-decoration: underline;
+    }
+
+    .flash-messages {
+        margin-top: 20px;
+    }
+
+    .flash-message {
+        background: #ef4444;
+        color: white;
+        padding: 12px 16px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.9rem;
+        margin-bottom: 8px;
+    }
+
+    .flash-message.success {
+        background: #22c55e;
+    }
+
+    .flash-message.info {
+        background: #3b82f6;
+    }
+
+    .flash-message.warning {
+        background: #f59e0b;
+    }
+
+    @media (max-width: 768px) {
+        .login-container {
+            grid-template-columns: 1fr;
+            max-width: 500px;
+        }
+
+        .login-hero {
+            padding: 40px 20px;
+        }
+
+        .brand-title {
+            font-size: 2rem;
+        }
+
+        .login-form-section {
+            padding: 40px 20px;
+        }
+
+        .form-title {
+            font-size: 1.5rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .login-page {
+            padding: 10px;
+        }
+
+        .brand-title {
+            font-size: 1.5rem;
+        }
+
+        .form-title {
+            font-size: 1.3rem;
+        }
+
+        .form-input {
+            padding: 14px 14px 14px 44px;
+        }
+
+        .input-icon {
+            left: 14px;
+        }
+
+        .form-label {
+            left: 44px;
+        }
+    }
+</style>
+
+{% endblock %}

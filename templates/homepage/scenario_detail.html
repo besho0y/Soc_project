@@ -1,0 +1,817 @@
+{% extends "homepage/homelayout.html" %}
+{% block content %}
+
+<div class="scenario-detail-page">
+  <!-- Header Section -->
+  <div class="page-header">
+    <div class="breadcrumb-container">
+      <a href="/scenario" class="back-link">
+        <i class="fas fa-arrow-left"></i>
+        <span>Back to Scenarios</span>
+      </a>
+    </div>
+
+    <div class="scenario-header">
+      <div class="scenario-image">
+        <img src="{{ scenario.img }}" alt="{{ scenario.title }}" class="header-image">
+        <div class="image-overlay">
+          <div class="scenario-meta">
+            <span class="difficulty-tag {{ scenario.lvl.lower() }}">
+              <i class="fas fa-signal"></i>
+              {{ scenario.lvl }}
+            </span>
+            <span class="points-tag">
+              <i class="fas fa-star"></i>
+              {{ scenario.points }} Points
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="scenario-info">
+        <h1 class="scenario-title">{{ scenario.title }}</h1>
+        <p class="scenario-type">Cybersecurity Investigation Scenario</p>
+        <p class="scenario-summary">{{ scenario.description }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="content-wrapper">
+    <div class="main-panel">
+      <!-- Investigation Content -->
+      <div class="content-card">
+        <div class="card-header">
+          <h2 class="card-title">
+            <i class="fas fa-search-plus"></i>
+            Investigation Brief
+          </h2>
+        </div>
+        <div class="card-content">
+          <div class="investigation-content">
+            {{ content|safe }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Additional Resources (if needed) -->
+      <div class="content-card resources-card">
+        <div class="card-header">
+          <h2 class="card-title">
+            <i class="fas fa-tools"></i>
+            Investigation Tools & Tips
+          </h2>
+        </div>
+        <div class="card-content">
+          <div class="tips-grid">
+            <div class="tip-item">
+              <i class="fas fa-lightbulb"></i>
+              <div>
+                <h4>Analyze Carefully</h4>
+                <p>Pay attention to details and patterns in the evidence</p>
+              </div>
+            </div>
+            <div class="tip-item">
+              <i class="fas fa-clipboard-check"></i>
+              <div>
+                <h4>Document Findings</h4>
+                <p>Keep track of your discoveries and conclusions</p>
+              </div>
+            </div>
+            <div class="tip-item">
+              <i class="fas fa-puzzle-piece"></i>
+              <div>
+                <h4>Connect the Dots</h4>
+                <p>Look for relationships between different pieces of evidence</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Action Panel -->
+      <div class="sidebar-card primary-card">
+        <div class="card-icon">
+          <i class="fas fa-play-circle"></i>
+        </div>
+        <h3 class="card-title">Ready to Start?</h3>
+        <p class="card-description">Begin your investigation and test your cybersecurity skills</p>
+        <button id="complete-scenario-btn" class="action-button primary"
+          onclick="completeScenario('{{ scenario.slug }}')">
+          <i class="fas fa-rocket"></i>
+          <span>Start Investigation</span>
+        </button>
+      </div>
+
+      <!-- Scenario Details -->
+      <div class="sidebar-card">
+        <h3 class="card-title">
+          <i class="fas fa-info-circle"></i>
+          Scenario Details
+        </h3>
+        <div class="details-list">
+          <div class="detail-row">
+            <span class="label">Difficulty Level</span>
+            <span class="difficulty-badge {{ scenario.lvl.lower() }}">{{ scenario.lvl }}</span>
+          </div>
+          <div class="detail-row">
+            <span class="label">Points Reward</span>
+            <span class="points-value">{{ scenario.points }} pts</span>
+          </div>
+          <div class="detail-row">
+            <span class="label">Category</span>
+            <span class="category-value">Investigation</span>
+          </div>
+          <div class="detail-row">
+            <span class="label">Format</span>
+            <span class="format-value">Hands-on Scenario</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      {% if prev_slug or next_slug %}
+      <div class="sidebar-card">
+        <h3 class="card-title">
+          <i class="fas fa-compass"></i>
+          Continue Learning
+        </h3>
+        <div class="navigation-buttons">
+          {% if prev_slug %}
+          <a href="{{ url_for('scenario_detail', slug=prev_slug) }}" class="nav-button prev">
+            <i class="fas fa-chevron-left"></i>
+            <span>Previous Scenario</span>
+          </a>
+          {% endif %}
+          {% if next_slug %}
+          <a href="{{ url_for('scenario_detail', slug=next_slug) }}" class="nav-button next">
+            <span>Next Scenario</span>
+            <i class="fas fa-chevron-right"></i>
+          </a>
+          {% endif %}
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<!-- Success Modal -->
+<div id="success-modal" class="modal">
+  <div class="modal-content">
+    <div class="modal-icon">
+      <i class="fas fa-check-circle"></i>
+    </div>
+    <h3>Scenario Completed!</h3>
+    <p>Congratulations! You've successfully completed this investigation.</p>
+    <button class="modal-button" onclick="closeModal()">Continue</button>
+  </div>
+</div>
+
+<script>
+  function completeScenario(slug) {
+    const button = document.getElementById('complete-scenario-btn');
+    const originalContent = button.innerHTML;
+
+    // Show loading state
+    button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Processing...</span>';
+    button.disabled = true;
+    button.classList.add('loading');
+
+    fetch(`/scenario/${slug}/complete`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          button.innerHTML = '<i class="fas fa-check"></i> <span>Completed!</span>';
+          button.classList.remove('loading');
+          button.classList.add('completed');
+
+          // Show success modal
+          document.getElementById('success-modal').classList.add('show');
+        } else {
+          button.innerHTML = originalContent;
+          button.disabled = false;
+          button.classList.remove('loading');
+          showNotification('Error: ' + data.message, 'error');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        button.innerHTML = originalContent;
+        button.disabled = false;
+        button.classList.remove('loading');
+        showNotification('An error occurred while completing the scenario.', 'error');
+      });
+  }
+
+  function closeModal() {
+    document.getElementById('success-modal').classList.remove('show');
+  }
+
+  function showNotification(message, type) {
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    notification.innerHTML = `
+        <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-triangle'}"></i>
+        <span>${message}</span>
+    `;
+
+    document.body.appendChild(notification);
+
+    setTimeout(() => {
+      notification.classList.add('show');
+    }, 100);
+
+    setTimeout(() => {
+      notification.classList.remove('show');
+      setTimeout(() => {
+        document.body.removeChild(notification);
+      }, 300);
+    }, 4000);
+  }
+</script>
+
+<style>
+  .scenario-detail-page {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px 40px;
+    min-height: 100vh;
+  }
+
+  /* Header Section */
+  .page-header {
+    margin-bottom: 40px;
+  }
+
+  .breadcrumb-container {
+    padding: 20px 0;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #94a3b8;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+
+  .back-link:hover {
+    color: #3b82f6;
+    background: rgba(59, 130, 246, 0.1);
+  }
+
+  .scenario-header {
+    display: grid;
+    grid-template-columns: 400px 1fr;
+    gap: 40px;
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    border-radius: 20px;
+    overflow: hidden;
+    padding: 0;
+    border: 1px solid rgba(148, 163, 184, 0.1);
+  }
+
+  .scenario-image {
+    position: relative;
+    height: 300px;
+    overflow: hidden;
+  }
+
+  .header-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.3) 100%);
+    display: flex;
+    align-items: flex-end;
+    padding: 20px;
+  }
+
+  .scenario-meta {
+    display: flex;
+    gap: 12px;
+  }
+
+  .difficulty-tag,
+  .points-tag {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .difficulty-tag.easy {
+    background: rgba(34, 197, 94, 0.9);
+    color: white;
+  }
+
+  .difficulty-tag.medium {
+    background: rgba(251, 191, 36, 0.9);
+    color: #1f2937;
+  }
+
+  .difficulty-tag.hard {
+    background: rgba(239, 68, 68, 0.9);
+    color: white;
+  }
+
+  .points-tag {
+    background: rgba(59, 130, 246, 0.9);
+    color: white;
+  }
+
+  .scenario-info {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .scenario-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #f8fafc;
+    margin: 0 0 12px 0;
+    line-height: 1.2;
+  }
+
+  .scenario-type {
+    color: #3b82f6;
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 16px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .scenario-summary {
+    color: #cbd5e1;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* Content Wrapper */
+  .content-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 40px;
+  }
+
+  .main-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  /* Cards */
+  .content-card,
+  .sidebar-card {
+    background: rgba(24, 28, 47, 0.8);
+    backdrop-filter: blur(20px);
+    border-radius: 16px;
+    border: 1px solid rgba(148, 163, 184, 0.1);
+    overflow: hidden;
+  }
+
+  .card-header {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    padding: 20px 30px;
+  }
+
+  .card-title {
+    color: white;
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .card-content {
+    padding: 30px;
+  }
+
+  .investigation-content {
+    color: #e2e8f0;
+    line-height: 1.7;
+    font-size: 1rem;
+  }
+
+  .investigation-content h1,
+  .investigation-content h2,
+  .investigation-content h3 {
+    color: #3b82f6;
+    margin-top: 0;
+    margin-bottom: 16px;
+  }
+
+  .investigation-content p {
+    margin-bottom: 16px;
+  }
+
+  .investigation-content code {
+    background: rgba(59, 130, 246, 0.1);
+    color: #60a5fa;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-family: 'Monaco', 'Menlo', monospace;
+    font-size: 0.9em;
+  }
+
+  .investigation-content pre {
+    background: #0f172a;
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    border-radius: 12px;
+    padding: 20px;
+    overflow-x: auto;
+    margin: 20px 0;
+  }
+
+  /* Tips Grid */
+  .tips-grid {
+    display: grid;
+    gap: 20px;
+  }
+
+  .tip-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px;
+    background: rgba(59, 130, 246, 0.05);
+    border-radius: 12px;
+    border: 1px solid rgba(59, 130, 246, 0.1);
+  }
+
+  .tip-item i {
+    color: #3b82f6;
+    font-size: 1.5rem;
+    margin-top: 4px;
+  }
+
+  .tip-item h4 {
+    color: #f8fafc;
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+  }
+
+  .tip-item p {
+    color: #94a3b8;
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* Sidebar */
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .sidebar-card {
+    padding: 24px;
+  }
+
+  .primary-card {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+    text-align: center;
+  }
+
+  .card-icon {
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px auto;
+    font-size: 1.5rem;
+  }
+
+  .primary-card .card-title {
+    color: white;
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+  }
+
+  .card-description {
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+
+  .action-button {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 14px 24px;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+  }
+
+  .action-button:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+  }
+
+  .action-button.loading {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  .action-button.completed {
+    background: rgba(34, 197, 94, 0.3);
+    border-color: rgba(34, 197, 94, 0.5);
+  }
+
+  /* Details List */
+  .details-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+  }
+
+  .detail-row:last-child {
+    border-bottom: none;
+  }
+
+  .label {
+    color: #94a3b8;
+    font-weight: 500;
+  }
+
+  .difficulty-badge {
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  .difficulty-badge.easy {
+    background: rgba(34, 197, 94, 0.2);
+    color: #22c55e;
+  }
+
+  .difficulty-badge.medium {
+    background: rgba(251, 191, 36, 0.2);
+    color: #fbbf24;
+  }
+
+  .difficulty-badge.hard {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+  }
+
+  .points-value,
+  .category-value,
+  .format-value {
+    color: #e2e8f0;
+    font-weight: 600;
+  }
+
+  /* Navigation */
+  .navigation-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .nav-button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    color: #3b82f6;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+
+  .nav-button:hover {
+    background: rgba(59, 130, 246, 0.2);
+    border-color: #3b82f6;
+    transform: translateX(4px);
+  }
+
+  .nav-button.prev:hover {
+    transform: translateX(-4px);
+  }
+
+  /* Modal */
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .modal.show {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .modal-content {
+    background: #1e293b;
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    max-width: 400px;
+    border: 1px solid rgba(148, 163, 184, 0.2);
+  }
+
+  .modal-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px auto;
+    font-size: 2rem;
+    color: white;
+  }
+
+  .modal-content h3 {
+    color: #f8fafc;
+    font-size: 1.5rem;
+    margin-bottom: 12px;
+  }
+
+  .modal-content p {
+    color: #94a3b8;
+    margin-bottom: 24px;
+  }
+
+  .modal-button {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .modal-button:hover {
+    transform: translateY(-2px);
+  }
+
+  /* Notifications */
+  .notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #1e293b;
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #f8fafc;
+    font-weight: 500;
+    z-index: 1001;
+    transform: translateX(400px);
+    opacity: 0;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(148, 163, 184, 0.2);
+  }
+
+  .notification.show {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  .notification.error {
+    border-color: #ef4444;
+  }
+
+  .notification.error i {
+    color: #ef4444;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 1200px) {
+    .content-wrapper {
+      grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+      order: -1;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .scenario-detail-page {
+      padding: 0 10px 20px;
+    }
+
+    .scenario-header {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+
+    .scenario-image {
+      height: 200px;
+    }
+
+    .scenario-info {
+      padding: 30px 20px;
+    }
+
+    .scenario-title {
+      font-size: 1.8rem;
+    }
+
+    .card-content {
+      padding: 20px;
+    }
+
+    .sidebar {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .scenario-title {
+      font-size: 1.5rem;
+    }
+
+    .scenario-meta {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .modal-content {
+      margin: 20px;
+      padding: 30px 20px;
+    }
+  }
+</style>
+
+{% endblock %}

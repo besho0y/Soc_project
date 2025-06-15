@@ -1,0 +1,633 @@
+{% extends "login&signup/signlayout.html"%}
+{% block content %}
+
+<div class="signup-page">
+    <div class="signup-container">
+        <div class="signup-hero">
+            <div class="hero-content">
+                <div class="brand-section">
+                    <div class="brand-icon">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <h1 class="brand-title">Join Socademy</h1>
+                    <p class="brand-subtitle">Start your cybersecurity journey today</p>
+                    <div class="features-list">
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Hands-on scenarios</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Interactive challenges</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Real-world simulations</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="signup-form-section">
+            <div class="form-container">
+                <div class="form-header">
+                    <h2 class="form-title">Create Account</h2>
+                    <p class="form-subtitle">Fill in your details to get started</p>
+                </div>
+
+                <form action="{{ url_for('signup') }}" method="POST" class="signup-form">
+                    <div class="input-group">
+                        <div class="input-container">
+                            <i class="fas fa-user input-icon"></i>
+                            <input type="text" name="username" required class="form-input" placeholder=" ">
+                            <label class="form-label">Username</label>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <div class="input-container">
+                            <i class="fas fa-envelope input-icon"></i>
+                            <input type="email" name="email" required class="form-input" placeholder=" ">
+                            <label class="form-label">Email Address</label>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <div class="input-container">
+                            <i class="fas fa-phone input-icon"></i>
+                            <input type="text" name="phone_number" required class="form-input" placeholder=" ">
+                            <label class="form-label">Phone Number</label>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <div class="input-container">
+                            <i class="fas fa-lock input-icon"></i>
+                            <input type="password" name="password" required class="form-input" placeholder=" ">
+                            <label class="form-label">Password</label>
+                        </div>
+                        <div class="password-strength">
+                            <div class="strength-bar">
+                                <div class="strength-fill"></div>
+                            </div>
+                            <span class="strength-text">Password strength</span>
+                        </div>
+                    </div>
+
+                    <div class="form-options">
+                        <label class="checkbox-container">
+                            <input type="checkbox" name="terms" required>
+                            <span class="checkmark"></span>
+                            <span class="checkbox-text">
+                                I agree to the <a href="#" class="terms-link">Terms of Service</a> and
+                                <a href="#" class="terms-link">Privacy Policy</a>
+                            </span>
+                        </label>
+                    </div>
+
+                    <div class="form-options">
+                        <label class="checkbox-container">
+                            <input type="checkbox" name="newsletter">
+                            <span class="checkmark"></span>
+                            <span class="checkbox-text">
+                                Subscribe to our newsletter for updates and tips
+                            </span>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-user-plus"></i>
+                        <span>Create Account</span>
+                    </button>
+
+
+
+                    <div class="form-footer">
+                        <p class="login-text">
+                            Already have an account?
+                            <a href="{{ url_for('login') }}" class="login-link">Sign in here</a>
+                        </p>
+                    </div>
+
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                    <div class="flash-messages">
+                        {% for category, message in messages %}
+                        <div class="flash-message {{ category }}">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <span>{{ message }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    {% endwith %}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .signup-page {
+        min-height: 100vh;
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .signup-page::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%23334155" stroke-width="0.5" opacity="0.2"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+        opacity: 0.1;
+    }
+
+    .signup-container {
+        background: #181c2f;
+        border-radius: 24px;
+        border: 1px solid #23264a;
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        overflow: hidden;
+        width: 100%;
+        max-width: 1100px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        min-height: 700px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .signup-hero {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 60px 40px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .signup-hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="white" opacity="0.1"/><circle cx="80" cy="40" r="1" fill="white" opacity="0.1"/><circle cx="40" cy="80" r="1.5" fill="white" opacity="0.1"/></svg>');
+        animation: float 20s ease-in-out infinite;
+    }
+
+    @keyframes float {
+
+        0%,
+        100% {
+            transform: translateY(0px) rotate(0deg);
+        }
+
+        50% {
+            transform: translateY(-20px) rotate(180deg);
+        }
+    }
+
+    .hero-content {
+        text-align: center;
+        position: relative;
+        z-index: 1;
+    }
+
+    .brand-icon {
+        width: 80px;
+        height: 80px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 24px auto;
+        font-size: 2rem;
+        color: white;
+        backdrop-filter: blur(10px);
+        border: 2px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .brand-title {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: white;
+        margin: 0 0 16px 0;
+        line-height: 1.2;
+    }
+
+    .brand-subtitle {
+        font-size: 1.1rem;
+        color: rgba(255, 255, 255, 0.8);
+        margin: 0 0 32px 0;
+        line-height: 1.5;
+    }
+
+    .features-list {
+        display: grid;
+        gap: 16px;
+        text-align: left;
+    }
+
+    .feature-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: white;
+        font-size: 1rem;
+        font-weight: 500;
+    }
+
+    .feature-item i {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 1.1rem;
+    }
+
+    .signup-form-section {
+        padding: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow-y: auto;
+    }
+
+    .form-container {
+        width: 100%;
+        max-width: 400px;
+    }
+
+    .form-header {
+        text-align: center;
+        margin-bottom: 32px;
+    }
+
+    .form-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #e5e7eb;
+        margin: 0 0 8px 0;
+    }
+
+    .form-subtitle {
+        color: #9ca3af;
+        margin: 0;
+        font-size: 1rem;
+    }
+
+    .signup-form {
+        display: grid;
+        gap: 20px;
+    }
+
+    .input-group {
+        position: relative;
+    }
+
+    .input-container {
+        position: relative;
+    }
+
+    .input-icon {
+        position: absolute;
+        left: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #6b7280;
+        font-size: 1.1rem;
+        z-index: 2;
+    }
+
+    .form-input {
+        width: 100%;
+        padding: 16px 16px 16px 48px;
+        background: #23264a;
+        border: 2px solid #374151;
+        border-radius: 12px;
+        color: #e5e7eb;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        outline: none;
+    }
+
+    .form-input:focus {
+        border-color: #10b981;
+        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+    }
+
+    .form-input:focus+.form-label,
+    .form-input:not(:placeholder-shown)+.form-label {
+        transform: translateY(-28px) scale(0.85);
+        color: #10b981;
+    }
+
+    .form-label {
+        position: absolute;
+        left: 48px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #9ca3af;
+        font-size: 1rem;
+        pointer-events: none;
+        transition: all 0.3s ease;
+        background: #23264a;
+        padding: 0 8px;
+        margin-left: -8px;
+    }
+
+    .password-strength {
+        margin-top: 8px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .strength-bar {
+        flex: 1;
+        height: 4px;
+        background: #374151;
+        border-radius: 2px;
+        overflow: hidden;
+    }
+
+    .strength-fill {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, #ef4444, #f59e0b, #10b981);
+        border-radius: 2px;
+        transition: width 0.3s ease;
+    }
+
+    .strength-text {
+        color: #9ca3af;
+        font-size: 0.8rem;
+        white-space: nowrap;
+    }
+
+    .form-options {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .checkbox-container {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        cursor: pointer;
+        color: #cbd5e1;
+        font-size: 0.9rem;
+        line-height: 1.4;
+    }
+
+    .checkbox-container input[type="checkbox"] {
+        display: none;
+    }
+
+    .checkmark {
+        width: 18px;
+        height: 18px;
+        border: 2px solid #374151;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        flex-shrink: 0;
+        margin-top: 2px;
+    }
+
+    .checkbox-container input[type="checkbox"]:checked+.checkmark {
+        background: #10b981;
+        border-color: #10b981;
+    }
+
+    .checkbox-container input[type="checkbox"]:checked+.checkmark::after {
+        content: '✓';
+        color: white;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .terms-link {
+        color: #10b981;
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.3s ease;
+    }
+
+    .terms-link:hover {
+        color: #22c55e;
+        text-decoration: underline;
+    }
+
+    .submit-btn {
+        background: linear-gradient(135deg, #10b981, #059669);
+        color: white;
+        border: none;
+        padding: 16px 24px;
+        border-radius: 12px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .submit-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.5s ease;
+    }
+
+    .submit-btn:hover::before {
+        left: 100%;
+    }
+
+    .submit-btn:hover {
+        background: linear-gradient(135deg, #059669, #047857);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+    }
+
+
+
+    .form-footer {
+        text-align: center;
+    }
+
+    .login-text {
+        color: #9ca3af;
+        margin: 0;
+        font-size: 0.9rem;
+    }
+
+    .login-link {
+        color: #10b981;
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.3s ease;
+    }
+
+    .login-link:hover {
+        color: #22c55e;
+        text-decoration: underline;
+    }
+
+    .flash-messages {
+        margin-top: 20px;
+    }
+
+    .flash-message {
+        background: #ef4444;
+        color: white;
+        padding: 12px 16px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.9rem;
+        margin-bottom: 8px;
+    }
+
+    .flash-message.success {
+        background: #22c55e;
+    }
+
+    .flash-message.info {
+        background: #3b82f6;
+    }
+
+    .flash-message.warning {
+        background: #f59e0b;
+    }
+
+    @media (max-width: 768px) {
+        .signup-container {
+            grid-template-columns: 1fr;
+            max-width: 500px;
+        }
+
+        .signup-hero {
+            padding: 40px 20px;
+        }
+
+        .brand-title {
+            font-size: 2rem;
+        }
+
+        .signup-form-section {
+            padding: 40px 20px;
+        }
+
+        .form-title {
+            font-size: 1.5rem;
+        }
+
+        .features-list {
+            text-align: center;
+        }
+
+        .feature-item {
+            justify-content: center;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .signup-page {
+            padding: 10px;
+        }
+
+        .brand-title {
+            font-size: 1.5rem;
+        }
+
+        .form-title {
+            font-size: 1.3rem;
+        }
+
+        .form-input {
+            padding: 14px 14px 14px 44px;
+        }
+
+        .input-icon {
+            left: 14px;
+        }
+
+        .form-label {
+            left: 44px;
+        }
+
+        .signup-form {
+            gap: 16px;
+        }
+    }
+
+    /* Password strength indicator */
+    .form-input[name="password"]:focus~.password-strength .strength-fill {
+        width: 33%;
+    }
+
+    .form-input[name="password"]:valid~.password-strength .strength-fill {
+        width: 66%;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const passwordInput = document.querySelector('input[name="password"]');
+        const strengthFill = document.querySelector('.strength-fill');
+        const strengthText = document.querySelector('.strength-text');
+
+        if (passwordInput && strengthFill && strengthText) {
+            passwordInput.addEventListener('input', function () {
+                const password = this.value;
+                let strength = 0;
+                let strengthLabel = 'Weak';
+
+                // Check password strength
+                if (password.length >= 8) strength += 25;
+                if (/[a-z]/.test(password)) strength += 25;
+                if (/[A-Z]/.test(password)) strength += 25;
+                if (/[0-9]/.test(password)) strength += 25;
+
+                if (strength >= 75) {
+                    strengthLabel = 'Strong';
+                    strengthFill.style.background = '#10b981';
+                } else if (strength >= 50) {
+                    strengthLabel = 'Medium';
+                    strengthFill.style.background = '#f59e0b';
+                } else {
+                    strengthLabel = 'Weak';
+                    strengthFill.style.background = '#ef4444';
+                }
+
+                strengthFill.style.width = strength + '%';
+                strengthText.textContent = strengthLabel;
+            });
+        }
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,627 @@
+{% extends "homepage/homelayout.html"%}
+{% block content %}
+
+<div class="achievements-page">
+    <div class="achievements-header">
+        <h1 class="page-title">Your Achievements</h1>
+        <p class="page-subtitle">Track your progress and celebrate your cybersecurity milestones</p>
+    </div>
+
+    <div class="achievements-stats">
+        <div class="stat-card scenarios-stat">
+            <div class="stat-icon">
+                <i class="fas fa-search"></i>
+            </div>
+            <div class="stat-info">
+                <h3 id="completed-scenarios-count">0</h3>
+                <p>Scenarios Completed</p>
+            </div>
+        </div>
+        <div class="stat-card challenges-stat">
+            <div class="stat-icon">
+                <i class="fas fa-trophy"></i>
+            </div>
+            <div class="stat-info">
+                <h3 id="completed-challenges-count">0</h3>
+                <p>Challenges Completed</p>
+            </div>
+        </div>
+        <div class="stat-card points-stat">
+            <div class="stat-icon">
+                <i class="fas fa-star"></i>
+            </div>
+            <div class="stat-info">
+                <h3 id="total-points-earned">0</h3>
+                <p>Points Earned</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="achievements-content">
+        <!-- Completed Scenarios Section -->
+        <div class="achievement-section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-shield-alt"></i>
+                    Completed Scenarios
+                </h2>
+                <div class="section-badge" id="scenarios-badge">0 Completed</div>
+            </div>
+            <div class="achievements-grid" id="done-scenarios">
+                <div class="loading-placeholder">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Loading your achievements...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Completed Challenges Section -->
+        <div class="achievement-section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-trophy"></i>
+                    Completed Challenges
+                </h2>
+                <div class="section-badge" id="challenges-badge">0 Completed</div>
+            </div>
+            <div class="achievements-grid" id="done-challenges">
+                <div class="loading-placeholder">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Loading your achievements...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        let totalPointsEarned = 0;
+
+        // Fetch done scenarios
+        fetch('/api/achievements')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                const scenariosContainer = document.getElementById('done-scenarios');
+                const scenariosCount = document.getElementById('completed-scenarios-count');
+                const scenariosBadge = document.getElementById('scenarios-badge');
+
+                if (data.done_scenarios && data.done_scenarios.length > 0) {
+                    scenariosContainer.innerHTML = '';
+
+                    data.done_scenarios.forEach(scenario => {
+                        totalPointsEarned += scenario.points;
+
+                        const achievementCard = document.createElement('div');
+                        achievementCard.className = 'achievement-card scenario-achievement';
+                        achievementCard.innerHTML = `
+                        <div class="achievement-image">
+                            <img src="${scenario.img}" alt="${scenario.title}">
+                            <div class="achievement-overlay">
+                                <div class="completion-badge">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="achievement-content">
+                            <div class="achievement-header">
+                                <h3 class="achievement-title">${scenario.title}</h3>
+                                <div class="achievement-badges">
+                                    <span class="difficulty-badge ${scenario.lvl.toLowerCase()}">${scenario.lvl}</span>
+                                    <span class="points-badge">${scenario.points} pts</span>
+                                </div>
+                            </div>
+                            <div class="achievement-footer">
+                                <div class="completion-status">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Completed</span>
+                                </div>
+                                <div class="completion-progress">100%</div>
+                            </div>
+                        </div>
+                    `;
+                        scenariosContainer.appendChild(achievementCard);
+                    });
+
+                    scenariosCount.textContent = data.done_scenarios.length;
+                    scenariosBadge.textContent = `${data.done_scenarios.length} Completed`;
+                } else {
+                    scenariosContainer.innerHTML = `
+                    <div class="no-achievements">
+                        <i class="fas fa-search"></i>
+                        <h3>No Scenarios Completed Yet</h3>
+                        <p>Start your first cybersecurity investigation to see your achievements here</p>
+                        <a href="/scenario" class="start-btn">
+                            <i class="fas fa-play"></i>
+                            Browse Scenarios
+                        </a>
+                    </div>
+                `;
+                    scenariosCount.textContent = '0';
+                    scenariosBadge.textContent = '0 Completed';
+                }
+
+                // Update total points
+                document.getElementById('total-points-earned').textContent = totalPointsEarned;
+            })
+            .catch(error => {
+                console.error('Error fetching achievements:', error);
+                document.getElementById('done-scenarios').innerHTML = `
+                <div class="error-message">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h3>Error Loading Achievements</h3>
+                    <p>Please try refreshing the page or contact support if the problem persists.</p>
+                </div>
+            `;
+            });
+
+        // Fetch done challenges
+        fetch('/api/done-challenges')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                const challengesContainer = document.getElementById('done-challenges');
+                const challengesCount = document.getElementById('completed-challenges-count');
+                const challengesBadge = document.getElementById('challenges-badge');
+
+                if (data.done_challenges && data.done_challenges.length > 0) {
+                    challengesContainer.innerHTML = '';
+
+                    data.done_challenges.forEach(challenge => {
+                        const achievementCard = document.createElement('div');
+                        achievementCard.className = 'achievement-card challenge-achievement';
+                        achievementCard.innerHTML = `
+                        <div class="achievement-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div class="achievement-content">
+                            <div class="achievement-header">
+                                <h3 class="achievement-title">${challenge.title}</h3>
+                                <div class="achievement-badges">
+                                    <span class="difficulty-badge ${challenge.level ? challenge.level.toLowerCase() : 'medium'}">${challenge.level || 'Medium'}</span>
+                                    <span class="points-badge">${challenge.points || 100} pts</span>
+                                </div>
+                            </div>
+                            <div class="achievement-footer">
+                                <div class="completion-status">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Quiz Passed</span>
+                                </div>
+                                <div class="completion-progress">100%</div>
+                            </div>
+                        </div>
+                    `;
+                        challengesContainer.appendChild(achievementCard);
+                    });
+
+                    challengesCount.textContent = data.done_challenges.length;
+                    challengesBadge.textContent = `${data.done_challenges.length} Completed`;
+                } else {
+                    challengesContainer.innerHTML = `
+                    <div class="no-achievements">
+                        <i class="fas fa-trophy"></i>
+                        <h3>No Challenges Completed Yet</h3>
+                        <p>Take your first cybersecurity quiz to earn challenge achievements</p>
+                        <a href="/challenges" class="start-btn">
+                            <i class="fas fa-play"></i>
+                            Browse Challenges
+                        </a>
+                    </div>
+                `;
+                    challengesCount.textContent = '0';
+                    challengesBadge.textContent = '0 Completed';
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching challenge achievements:', error);
+                document.getElementById('done-challenges').innerHTML = `
+                <div class="no-achievements">
+                    <i class="fas fa-trophy"></i>
+                    <h3>No Challenges Completed Yet</h3>
+                    <p>Take your first cybersecurity quiz to earn challenge achievements</p>
+                    <a href="/challenges" class="start-btn">
+                        <i class="fas fa-play"></i>
+                        Browse Challenges
+                    </a>
+                </div>
+            `;
+            });
+    });
+</script>
+
+<style>
+    .achievements-page {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .achievements-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .page-title {
+        font-size: 3rem;
+        color: #2563eb;
+        margin-bottom: 10px;
+        font-weight: 700;
+    }
+
+    .page-subtitle {
+        font-size: 1.2rem;
+        color: #cbd5e1;
+        margin: 0;
+    }
+
+    .achievements-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 24px;
+        margin-bottom: 40px;
+    }
+
+    .stat-card {
+        background: #181c2f;
+        border-radius: 16px;
+        padding: 28px;
+        border: 1px solid #23264a;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .stat-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #2563eb, #3b82f6);
+    }
+
+    .stat-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 40px rgba(37, 99, 235, 0.15);
+        border-color: #2563eb;
+    }
+
+    .stat-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+        color: white;
+        flex-shrink: 0;
+    }
+
+    .scenarios-stat .stat-icon {
+        background: linear-gradient(135deg, #2563eb, #1e40af);
+    }
+
+    .challenges-stat .stat-icon {
+        background: linear-gradient(135deg, #f59e0b, #d97706);
+    }
+
+    .points-stat .stat-icon {
+        background: linear-gradient(135deg, #10b981, #059669);
+    }
+
+    .stat-info h3 {
+        font-size: 2.2rem;
+        color: #e5e7eb;
+        margin: 0 0 4px 0;
+        font-weight: 700;
+    }
+
+    .stat-info p {
+        color: #9ca3af;
+        margin: 0;
+        font-size: 1rem;
+    }
+
+    .achievements-content {
+        display: grid;
+        gap: 50px;
+    }
+
+    .achievement-section {
+        background: #181c2f;
+        border-radius: 20px;
+        border: 1px solid #23264a;
+        overflow: hidden;
+    }
+
+    .section-header {
+        background: linear-gradient(135deg, #2563eb, #1e40af);
+        padding: 24px 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .section-title {
+        color: white;
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .section-badge {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+
+    .achievements-grid {
+        padding: 30px;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 24px;
+    }
+
+    .achievement-card {
+        background: #23264a;
+        border-radius: 16px;
+        border: 1px solid #374151;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+    .achievement-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 40px rgba(37, 99, 235, 0.15);
+        border-color: #2563eb;
+    }
+
+    .scenario-achievement .achievement-image {
+        height: 180px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .achievement-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    .achievement-card:hover .achievement-image img {
+        transform: scale(1.05);
+    }
+
+    .achievement-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.3) 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .completion-badge {
+        width: 60px;
+        height: 60px;
+        background: #22c55e;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.5rem;
+        box-shadow: 0 4px 20px rgba(34, 197, 94, 0.3);
+    }
+
+    .challenge-achievement .achievement-icon {
+        height: 120px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #f59e0b, #d97706);
+        color: white;
+        font-size: 3rem;
+    }
+
+    .achievement-content {
+        padding: 24px;
+    }
+
+    .achievement-header {
+        margin-bottom: 20px;
+    }
+
+    .achievement-title {
+        color: #e5e7eb;
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin: 0 0 12px 0;
+        line-height: 1.4;
+    }
+
+    .achievement-badges {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .difficulty-badge {
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+    .difficulty-badge.easy {
+        background: #22c55e;
+        color: #0f1419;
+    }
+
+    .difficulty-badge.medium {
+        background: #fbbf24;
+        color: #0f1419;
+    }
+
+    .difficulty-badge.hard {
+        background: #ef4444;
+        color: white;
+    }
+
+    .points-badge {
+        background: #2563eb;
+        color: white;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
+    .achievement-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .completion-status {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #22c55e;
+        font-weight: 600;
+    }
+
+    .completion-progress {
+        background: #22c55e;
+        color: white;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
+    .loading-placeholder,
+    .no-achievements,
+    .error-message {
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 60px 20px;
+        color: #6b7280;
+    }
+
+    .loading-placeholder i {
+        font-size: 3rem;
+        margin-bottom: 20px;
+        color: #2563eb;
+    }
+
+    .no-achievements i,
+    .error-message i {
+        font-size: 4rem;
+        margin-bottom: 20px;
+        opacity: 0.5;
+    }
+
+    .no-achievements h3,
+    .error-message h3 {
+        font-size: 1.5rem;
+        margin: 0 0 10px 0;
+        color: #9ca3af;
+    }
+
+    .no-achievements p,
+    .error-message p {
+        margin: 0 0 20px 0;
+        font-size: 1rem;
+    }
+
+    .start-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: linear-gradient(135deg, #2563eb, #1e40af);
+        color: white;
+        text-decoration: none;
+        padding: 12px 24px;
+        border-radius: 10px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .start-btn:hover {
+        background: linear-gradient(135deg, #1e40af, #1e3a8a);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
+    }
+
+    @media (max-width: 768px) {
+        .achievements-page {
+            padding: 10px;
+        }
+
+        .page-title {
+            font-size: 2rem;
+        }
+
+        .achievements-stats {
+            grid-template-columns: 1fr;
+        }
+
+        .achievements-grid {
+            grid-template-columns: 1fr;
+            padding: 20px;
+        }
+
+        .section-header {
+            flex-direction: column;
+            gap: 12px;
+            text-align: center;
+        }
+
+        .achievement-content {
+            padding: 20px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .page-title {
+            font-size: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+        }
+
+        .stat-info h3 {
+            font-size: 1.8rem;
+        }
+    }
+</style>
+
+{% endblock %}

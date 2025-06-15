@@ -1,0 +1,628 @@
+{% extends "homepage/homelayout.html"%}
+{% block content %}
+
+<div class="homepage-container">
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">Welcome to <span class="brand-text">Socademy Online</span></h1>
+            <p class="hero-subtitle">Master cybersecurity through hands-on scenarios and real-world challenges</p>
+        </div>
+        <div class="hero-visual">
+            <div class="security-icon">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Statistics Dashboard -->
+    <div class="stats-dashboard">
+        <div class="stat-card scenarios-stat">
+            <div class="stat-icon">
+                <i class="fas fa-search"></i>
+            </div>
+            <div class="stat-content">
+                <div class="stat-number">{{achieved_scenarios}} / {{total_scenarios}}</div>
+                <div class="stat-label">Scenarios Completed</div>
+                <div class="stat-progress">
+                    <div class="progress-bar"
+                        data-progress="{% if total_scenarios > 0 %}{{ (achieved_scenarios / total_scenarios * 100)|round }}{% else %}0{% endif %}">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="stat-card challenges-stat">
+            <div class="stat-icon">
+                <i class="fas fa-trophy"></i>
+            </div>
+            <div class="stat-content">
+                <div class="stat-number">{{total_challenges}} / 7</div>
+                <div class="stat-label">Challenges Completed</div>
+                <div class="stat-progress">
+                    <div class="progress-bar"
+                        data-progress="{% if total_challenges > 0 %}{{ (total_challenges / 7 * 100)|round }}{% else %}0{% endif %}">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="stat-card points-stat">
+            <div class="stat-icon">
+                <i class="fas fa-star"></i>
+            </div>
+            <div class="stat-content">
+                <div class="stat-number">{{achieved_points}} / {{total_possible_points}}</div>
+                <div class="stat-label">Points Earned</div>
+                <div class="stat-progress">
+                    <div class="progress-bar"
+                        data-progress="{% if total_possible_points > 0 %}{{ (achieved_points / total_possible_points * 100)|round }}{% else %}0{% endif %}">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Welcome Section -->
+        <div class="welcome-section">
+            <div class="welcome-card">
+                <h2 class="section-title">Getting Started</h2>
+                <div class="welcome-text">
+                    <p>
+                        Please familiarize yourself with our <a href="#" class="inline-link">Platform Rules</a>.
+                        This will ensure you're aware of our restrictions regarding publishing writeups,
+                        sharing answers, and other activities.
+                    </p>
+                    <p>
+                        Our platform is the perfect place for established cyber defenders to practice in realistic
+                        scenarios and showcase their skills in a gamified and competitive environment. Paired with
+                        external training or self-study, Socademy can develop your technical capability to investigate
+                        and
+                        defend against cyber attacks and intrusions.
+                    </p>
+                    <p class="good-luck">Good luck, Defenders! 🛡️</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <h2 class="section-title">Quick Actions</h2>
+            <div class="action-cards">
+                <a href="{{url_for('scenario')}}" class="action-card scenarios-card">
+                    <div class="action-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div class="action-content">
+                        <h3>Investigations</h3>
+                        <p>Dive into realistic cybersecurity scenarios</p>
+                        <span class="action-badge">{{total_scenarios}} Available</span>
+                    </div>
+                    <div class="action-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
+
+                <a href="{{url_for('challenges')}}" class="action-card challenges-card">
+                    <div class="action-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="action-content">
+                        <h3>Challenges</h3>
+                        <p>Test your knowledge with interactive quizzes</p>
+                        <span class="action-badge">7 Available</span>
+                    </div>
+                    <div class="action-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
+
+                <a href="{{url_for('user_profile')}}" class="action-card profile-card">
+                    <div class="action-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="action-content">
+                        <h3>Your Profile</h3>
+                        <p>View your progress and achievements</p>
+                        <span class="action-badge">Personal</span>
+                    </div>
+                    <div class="action-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
+
+                <div class="action-card help-card">
+                    <div class="action-icon">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <div class="action-content">
+                        <h3>Help & FAQ</h3>
+                        <p>Get support and find answers</p>
+                        <span class="action-badge">Support</span>
+                    </div>
+                    <div class="action-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="recent-activity">
+            <h2 class="section-title">Recent Activity</h2>
+            <div class="activity-card">
+                <div class="activity-placeholder">
+                    <i class="fas fa-clock"></i>
+                    <h3>No Recent Activity</h3>
+                    <p>Start your first scenario or challenge to see your activity here</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .homepage-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        min-height: 100vh;
+    }
+
+    /* Hero Section */
+    .hero-section {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 40px;
+        padding: 40px 0;
+        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        border-radius: 20px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%23334155" stroke-width="0.5" opacity="0.3"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+        opacity: 0.1;
+    }
+
+    .hero-content {
+        flex: 1;
+        padding: 0 40px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .hero-title {
+        font-size: 3.5rem;
+        font-weight: 800;
+        color: #e5e7eb;
+        margin: 0 0 20px 0;
+        line-height: 1.2;
+    }
+
+    .brand-text {
+        background: linear-gradient(135deg, #2563eb, #3b82f6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .hero-subtitle {
+        font-size: 1.3rem;
+        color: #cbd5e1;
+        margin: 0;
+        line-height: 1.6;
+    }
+
+    .hero-visual {
+        padding: 0 40px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .security-icon {
+        width: 120px;
+        height: 120px;
+        background: linear-gradient(135deg, #2563eb, #1e40af);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+        color: white;
+        box-shadow: 0 20px 40px rgba(37, 99, 235, 0.3);
+        animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+
+        0%,
+        100% {
+            transform: translateY(0px);
+        }
+
+        50% {
+            transform: translateY(-10px);
+        }
+    }
+
+    /* Statistics Dashboard */
+    .stats-dashboard {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 24px;
+        margin-bottom: 40px;
+    }
+
+    .stat-card {
+        background: #181c2f;
+        border-radius: 16px;
+        padding: 28px;
+        border: 1px solid #23264a;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .stat-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #2563eb, #3b82f6);
+    }
+
+    .stat-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 40px rgba(37, 99, 235, 0.15);
+        border-color: #2563eb;
+    }
+
+    .stat-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+        color: white;
+        flex-shrink: 0;
+    }
+
+    .scenarios-stat .stat-icon {
+        background: linear-gradient(135deg, #2563eb, #1e40af);
+    }
+
+    .challenges-stat .stat-icon {
+        background: linear-gradient(135deg, #f59e0b, #d97706);
+    }
+
+    .points-stat .stat-icon {
+        background: linear-gradient(135deg, #10b981, #059669);
+    }
+
+
+
+    .stat-content {
+        flex: 1;
+    }
+
+    .stat-number {
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: #e5e7eb;
+        margin-bottom: 4px;
+    }
+
+    .stat-label {
+        color: #9ca3af;
+        font-size: 1rem;
+        margin-bottom: 12px;
+    }
+
+    .stat-progress {
+        width: 100%;
+        height: 6px;
+        background: #23264a;
+        border-radius: 3px;
+        overflow: hidden;
+    }
+
+    .progress-bar {
+        height: 100%;
+        background: linear-gradient(90deg, #2563eb, #3b82f6);
+        border-radius: 3px;
+        transition: width 0.8s ease;
+    }
+
+    /* Main Content */
+    .main-content {
+        display: grid;
+        gap: 40px;
+    }
+
+    .section-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #e5e7eb;
+        margin: 0 0 24px 0;
+    }
+
+    /* Welcome Section */
+    .welcome-card {
+        background: #181c2f;
+        border-radius: 16px;
+        padding: 32px;
+        border: 1px solid #23264a;
+    }
+
+    .welcome-text p {
+        color: #cbd5e1;
+        font-size: 1.1rem;
+        line-height: 1.7;
+        margin-bottom: 20px;
+    }
+
+    .welcome-text p:last-child {
+        margin-bottom: 0;
+    }
+
+    .inline-link {
+        color: #3b82f6;
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.3s;
+    }
+
+    .inline-link:hover {
+        color: #2563eb;
+        text-decoration: underline;
+    }
+
+    .good-luck {
+        font-weight: 600;
+        color: #10b981;
+        font-size: 1.2rem;
+    }
+
+    /* Quick Actions */
+    .action-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 24px;
+    }
+
+    .action-card {
+        background: #181c2f;
+        border-radius: 16px;
+        padding: 28px;
+        border: 1px solid #23264a;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .action-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+    }
+
+    .scenarios-card::before {
+        background: linear-gradient(90deg, #2563eb, #3b82f6);
+    }
+
+    .challenges-card::before {
+        background: linear-gradient(90deg, #f59e0b, #d97706);
+    }
+
+    .profile-card::before {
+        background: linear-gradient(90deg, #10b981, #059669);
+    }
+
+    .help-card::before {
+        background: linear-gradient(90deg, #ef4444, #dc2626);
+    }
+
+    .action-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+        border-color: #2563eb;
+    }
+
+    .action-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+        color: white;
+        flex-shrink: 0;
+    }
+
+    .scenarios-card .action-icon {
+        background: linear-gradient(135deg, #2563eb, #1e40af);
+    }
+
+    .challenges-card .action-icon {
+        background: linear-gradient(135deg, #f59e0b, #d97706);
+    }
+
+    .profile-card .action-icon {
+        background: linear-gradient(135deg, #10b981, #059669);
+    }
+
+    .help-card .action-icon {
+        background: linear-gradient(135deg, #ef4444, #dc2626);
+    }
+
+    .action-content {
+        flex: 1;
+    }
+
+    .action-content h3 {
+        font-size: 1.4rem;
+        font-weight: 600;
+        color: #e5e7eb;
+        margin: 0 0 8px 0;
+    }
+
+    .action-content p {
+        color: #9ca3af;
+        margin: 0 0 12px 0;
+        line-height: 1.5;
+    }
+
+    .action-badge {
+        background: #23264a;
+        color: #cbd5e1;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+
+    .action-arrow {
+        color: #6b7280;
+        font-size: 1.2rem;
+        transition: all 0.3s ease;
+    }
+
+    .action-card:hover .action-arrow {
+        color: #2563eb;
+        transform: translateX(4px);
+    }
+
+    /* Recent Activity */
+    .activity-card {
+        background: #181c2f;
+        border-radius: 16px;
+        padding: 40px;
+        border: 1px solid #23264a;
+        text-align: center;
+    }
+
+    .activity-placeholder i {
+        font-size: 3rem;
+        color: #6b7280;
+        margin-bottom: 20px;
+    }
+
+    .activity-placeholder h3 {
+        font-size: 1.5rem;
+        color: #9ca3af;
+        margin: 0 0 12px 0;
+    }
+
+    .activity-placeholder p {
+        color: #6b7280;
+        margin: 0;
+        font-size: 1.1rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .homepage-container {
+            padding: 10px;
+        }
+
+        .hero-section {
+            flex-direction: column;
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+        }
+
+        .hero-content,
+        .hero-visual {
+            padding: 0;
+        }
+
+        .hero-visual {
+            margin-top: 30px;
+        }
+
+        .stats-dashboard {
+            grid-template-columns: 1fr;
+        }
+
+        .action-cards {
+            grid-template-columns: 1fr;
+        }
+
+        .action-card {
+            padding: 20px;
+        }
+
+        .stat-card {
+            padding: 20px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .hero-title {
+            font-size: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+        }
+
+        .action-content h3 {
+            font-size: 1.2rem;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Animate progress bars
+        const progressBars = document.querySelectorAll('.progress-bar');
+        progressBars.forEach(bar => {
+            const progress = bar.getAttribute('data-progress');
+            setTimeout(() => {
+                bar.style.width = progress + '%';
+            }, 500);
+        });
+    });
+</script>
+
+{% endblock %}

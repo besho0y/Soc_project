@@ -1,0 +1,678 @@
+{% extends "homepage/homelayout.html"%}
+{% block content %}
+
+<div class="challenges-page">
+    <div class="challenges-header">
+        <h1 class="page-title">Cybersecurity Challenges</h1>
+        <p class="page-subtitle">Test your knowledge with interactive quizzes</p>
+    </div>
+
+    <div class="challenges-stats">
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="fas fa-trophy"></i>
+            </div>
+            <div class="stat-info">
+                <h3 id="completed-challenges">0</h3>
+                <p>Completed</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="fas fa-target"></i>
+            </div>
+            <div class="stat-info">
+                <h3 id="total-challenges">7</h3>
+                <p>Total Challenges</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="fas fa-star"></i>
+            </div>
+            <div class="stat-info">
+                <h3 id="total-points">0</h3>
+                <p>Points Earned</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="challenges-filters">
+        <div class="search-container">
+            <i class="fas fa-search"></i>
+            <input type="text" id="challenge-search-input" placeholder="Search challenges...">
+        </div>
+
+        <div class="filter-group">
+            <label>Difficulty:</label>
+            <div class="checkbox-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" name="level" value="Easy">
+                    <span class="checkmark easy"></span>
+                    Easy
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" name="level" value="Medium">
+                    <span class="checkmark medium"></span>
+                    Medium
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" name="level" value="Hard">
+                    <span class="checkmark hard"></span>
+                    Hard
+                </label>
+            </div>
+        </div>
+
+        <div class="filter-group">
+            <label for="points-select">Points:</label>
+            <select id="points-select" name="points">
+                <option value="all">All Points</option>
+                <option value="lt100">Less than 100</option>
+                <option value="100-120">100 - 120</option>
+                <option value="gt120">More than 120</option>
+            </select>
+        </div>
+
+        <button type="button" id="clear-filters" class="clear-btn">
+            <i class="fas fa-times"></i> Clear Filters
+        </button>
+    </div>
+
+    <div class="challenges-grid" id="challenges-container">
+        <!-- Challenges will be populated by JavaScript -->
+    </div>
+</div>
+
+<script>
+    let allChallenges = [];
+    let completedChallenges = [];
+
+    function renderChallenges(data) {
+        const challengesContainer = document.getElementById('challenges-container');
+        challengesContainer.innerHTML = '';
+
+        if (data.length === 0) {
+            const noResult = document.createElement('div');
+            noResult.className = 'no-results';
+            noResult.innerHTML = `
+                <i class="fas fa-search"></i>
+                <h3>No challenges found</h3>
+                <p>Try adjusting your search or filters</p>
+            `;
+            challengesContainer.appendChild(noResult);
+            return;
+        }
+
+        data.forEach(challenge => {
+            const challengeCard = document.createElement('div');
+            const isCompleted = completedChallenges.some(completed =>
+                completed.title === challenge.title);
+
+            challengeCard.className = `challenge-card ${isCompleted ? 'completed' : ''}`;
+
+            const levelClass = challenge.lvl.toLowerCase();
+
+            challengeCard.innerHTML = `
+                <div class="challenge-header">
+                    <div class="challenge-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="challenge-badges">
+                        <span class="difficulty-badge ${levelClass}">${challenge.lvl}</span>
+                        <span class="points-badge">${challenge.points} pts</span>
+                        ${isCompleted ? '<span class="completed-badge"><i class="fas fa-check"></i> Completed</span>' : ''}
+                    </div>
+                </div>
+                <div class="challenge-content">
+                    <h3 class="challenge-title">${challenge.title}</h3>
+                    <div class="challenge-meta">
+                        <span class="duration">
+                            <i class="fas fa-clock"></i> ${challenge.duration}
+                        </span>
+                        <span class="questions">
+                            <i class="fas fa-question-circle"></i> 5 Questions
+                        </span>
+                    </div>
+                </div>
+                <div class="challenge-footer">
+                    <button class="start-btn ${isCompleted ? 'completed-btn' : ''}" onclick="startChallenge('${challenge.slug}')">
+                        <i class="fas fa-${isCompleted ? 'redo' : 'play'}"></i> ${isCompleted ? 'Retake Challenge' : 'Start Challenge'}
+                    </button>
+                </div>
+            `;
+            challengesContainer.appendChild(challengeCard);
+        });
+
+        // Update total challenges count
+        document.getElementById('total-challenges').textContent = data.length;
+    }
+
+    function startChallenge(slug) {
+        // Redirect to the quiz page with the challenge slug as a parameter
+        window.location.href = `/quiz?challenge=${slug}`;
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // Fetch challenges
+        fetch('/api/challenges')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                allChallenges = data;
+                renderChallenges(allChallenges);
+            })
+            .catch(error => console.error('Error fetching challenges:', error));
+
+        // Fetch user's completed challenges statistics
+        fetch('/api/done-challenges')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                completedChallenges = data.done_challenges || [];
+                const completedCount = completedChallenges.length;
+                const totalPoints = completedChallenges.reduce((sum, challenge) => sum + (challenge.points || 0), 0);
+
+                // Update statistics
+                document.getElementById('completed-challenges').textContent = completedCount;
+                document.getElementById('total-points').textContent = totalPoints;
+
+                // Re-render challenges with completion status
+                if (allChallenges.length > 0) {
+                    renderChallenges(allChallenges);
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching completed challenges:', error);
+                // Keep default values on error
+            });
+
+        // Search and filter functionality
+        const searchInput = document.getElementById('challenge-search-input');
+        const checkboxes = document.querySelectorAll('input[name="level"]');
+        const pointsSelect = document.getElementById('points-select');
+        const clearBtn = document.getElementById('clear-filters');
+
+        function filterChallenges() {
+            const searchValue = searchInput.value.toLowerCase();
+            const selectedLevels = Array.from(checkboxes)
+                .filter(cb => cb.checked)
+                .map(cb => cb.value);
+            const pointsValue = pointsSelect.value;
+
+            let filtered = allChallenges.filter(challenge => {
+                const matchesSearch = challenge.title.toLowerCase().includes(searchValue);
+                const matchesLevel =
+                    selectedLevels.length === 0 || selectedLevels.includes(challenge.lvl);
+                let matchesPoints = true;
+                if (pointsValue === 'lt100') matchesPoints = challenge.points < 100;
+                else if (pointsValue === '100-120') matchesPoints = challenge.points >= 100 && challenge.points <= 120;
+                else if (pointsValue === 'gt120') matchesPoints = challenge.points > 120;
+
+                return matchesSearch && matchesLevel && matchesPoints;
+            });
+            renderChallenges(filtered);
+        }
+
+        // Add event listeners
+        searchInput.addEventListener('input', filterChallenges);
+        checkboxes.forEach(cb => cb.addEventListener('change', filterChallenges));
+        pointsSelect.addEventListener('change', filterChallenges);
+
+        clearBtn.addEventListener('click', function () {
+            searchInput.value = '';
+            checkboxes.forEach(cb => cb.checked = false);
+            pointsSelect.value = 'all';
+            renderChallenges(allChallenges);
+        });
+    });
+</script>
+
+<style>
+    .challenges-page {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .challenges-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .page-title {
+        font-size: 3rem;
+        color: #2563eb;
+        margin-bottom: 10px;
+        font-weight: 700;
+    }
+
+    .page-subtitle {
+        font-size: 1.2rem;
+        color: #cbd5e1;
+        margin: 0;
+    }
+
+    .challenges-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin-bottom: 40px;
+    }
+
+    .stat-card {
+        background: #181c2f;
+        border-radius: 16px;
+        padding: 24px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        border: 1px solid #23264a;
+    }
+
+    .stat-icon {
+        background: #2563eb;
+        color: white;
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+    }
+
+    .stat-info h3 {
+        font-size: 2rem;
+        color: #2563eb;
+        margin: 0;
+        font-weight: 700;
+    }
+
+    .stat-info p {
+        color: #cbd5e1;
+        margin: 0;
+        font-size: 0.9rem;
+    }
+
+    .challenges-filters {
+        background: #181c2f;
+        border-radius: 16px;
+        padding: 24px;
+        margin-bottom: 40px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        align-items: center;
+        border: 1px solid #23264a;
+    }
+
+    .search-container {
+        position: relative;
+        flex: 1;
+        min-width: 250px;
+    }
+
+    .search-container i {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #6b7280;
+    }
+
+    .search-container input {
+        width: 100%;
+        padding: 12px 12px 12px 40px;
+        border: 2px solid #23264a;
+        border-radius: 10px;
+        background: #0f1419;
+        color: #e5e7eb;
+        font-size: 1rem;
+        transition: border-color 0.3s;
+    }
+
+    .search-container input:focus {
+        outline: none;
+        border-color: #2563eb;
+    }
+
+    .filter-group {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .filter-group label {
+        color: #cbd5e1;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    .checkbox-group {
+        display: flex;
+        gap: 16px;
+    }
+
+    .checkbox-label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        color: #e5e7eb;
+        font-weight: normal;
+    }
+
+    .checkbox-label input[type="checkbox"] {
+        display: none;
+    }
+
+    .checkmark {
+        width: 20px;
+        height: 20px;
+        border-radius: 4px;
+        border: 2px solid #23264a;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s;
+    }
+
+    .checkmark.easy {
+        border-color: #22c55e;
+    }
+
+    .checkmark.medium {
+        border-color: #fbbf24;
+    }
+
+    .checkmark.hard {
+        border-color: #ef4444;
+    }
+
+    .checkbox-label input[type="checkbox"]:checked+.checkmark {
+        background: currentColor;
+    }
+
+    .checkbox-label input[type="checkbox"]:checked+.checkmark.easy {
+        background: #22c55e;
+    }
+
+    .checkbox-label input[type="checkbox"]:checked+.checkmark.medium {
+        background: #fbbf24;
+    }
+
+    .checkbox-label input[type="checkbox"]:checked+.checkmark.hard {
+        background: #ef4444;
+    }
+
+    .checkbox-label input[type="checkbox"]:checked+.checkmark::after {
+        content: '✓';
+        color: white;
+        font-weight: bold;
+        font-size: 12px;
+    }
+
+    #points-select {
+        padding: 10px 16px;
+        border: 2px solid #23264a;
+        border-radius: 8px;
+        background: #0f1419;
+        color: #e5e7eb;
+        cursor: pointer;
+        min-width: 140px;
+    }
+
+    #points-select:focus {
+        outline: none;
+        border-color: #2563eb;
+    }
+
+    .clear-btn {
+        background: #ef4444;
+        color: white;
+        border: none;
+        padding: 10px 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s;
+    }
+
+    .clear-btn:hover {
+        background: #dc2626;
+        transform: translateY(-2px);
+    }
+
+    .challenges-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 24px;
+    }
+
+    .challenge-card {
+        background: #181c2f;
+        border-radius: 16px;
+        border: 1px solid #23264a;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        position: relative;
+    }
+
+    .challenge-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 40px rgba(37, 99, 235, 0.15);
+        border-color: #2563eb;
+    }
+
+    .challenge-header {
+        padding: 20px 20px 0 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .challenge-icon {
+        background: linear-gradient(135deg, #2563eb, #1e40af);
+        color: white;
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+    }
+
+    .challenge-badges {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-end;
+    }
+
+    .difficulty-badge {
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+    .difficulty-badge.easy {
+        background: #22c55e;
+        color: #0f1419;
+    }
+
+    .difficulty-badge.medium {
+        background: #fbbf24;
+        color: #0f1419;
+    }
+
+    .difficulty-badge.hard {
+        background: #ef4444;
+        color: white;
+    }
+
+    .points-badge {
+        background: #2563eb;
+        color: white;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
+    .challenge-content {
+        padding: 20px;
+    }
+
+    .challenge-title {
+        color: #e5e7eb;
+        font-size: 1.3rem;
+        margin: 0 0 16px 0;
+        font-weight: 600;
+        line-height: 1.4;
+    }
+
+    .challenge-meta {
+        display: flex;
+        gap: 20px;
+        color: #9ca3af;
+        font-size: 0.9rem;
+    }
+
+    .challenge-meta span {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .challenge-footer {
+        padding: 0 20px 20px 20px;
+    }
+
+    .start-btn {
+        width: 100%;
+        background: linear-gradient(135deg, #2563eb, #1e40af);
+        color: white;
+        border: none;
+        padding: 14px 24px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .start-btn:hover {
+        background: linear-gradient(135deg, #1e40af, #1e3a8a);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
+    }
+
+    .no-results {
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 60px 20px;
+        color: #6b7280;
+    }
+
+    .no-results i {
+        font-size: 4rem;
+        margin-bottom: 20px;
+        opacity: 0.5;
+    }
+
+    .no-results h3 {
+        font-size: 1.5rem;
+        margin: 0 0 10px 0;
+        color: #9ca3af;
+    }
+
+    .no-results p {
+        margin: 0;
+        font-size: 1rem;
+    }
+
+    @media (max-width: 768px) {
+        .challenges-page {
+            padding: 10px;
+        }
+
+        .page-title {
+            font-size: 2rem;
+        }
+
+        .challenges-filters {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .filter-group {
+            justify-content: space-between;
+        }
+
+        .checkbox-group {
+            justify-content: flex-end;
+        }
+
+        .challenges-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .challenge-card.completed {
+        border-color: #10b981;
+        background: linear-gradient(135deg, #181c2f 0%, #1a2332 100%);
+    }
+
+    .challenge-card.completed::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #10b981, #059669);
+    }
+
+    .completed-badge {
+        background: #10b981;
+        color: white;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .completed-btn {
+        background: linear-gradient(135deg, #10b981, #059669) !important;
+    }
+
+    .completed-btn:hover {
+        background: linear-gradient(135deg, #059669, #047857) !important;
+    }
+</style>
+
+{% endblock %}

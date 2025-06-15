@@ -1,0 +1,455 @@
+{% extends "homepage/homelayout.html"%}
+{% block content %}
+
+<div class="scenarios-page">
+  <div class="scenarios-header">
+    <h1 class="page-title">Cybersecurity Scenarios</h1>
+    <p class="page-subtitle">Hands-on investigations and real-world simulations</p>
+  </div>
+
+  <div class="scenarios-stats">
+    <div class="stat-card">
+      <div class="stat-icon">
+        <i class="fas fa-search"></i>
+      </div>
+      <div class="stat-info">
+        <h3 id="completed-scenarios">0</h3>
+        <p>Completed</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">
+        <i class="fas fa-shield-alt"></i>
+      </div>
+      <div class="stat-info">
+        <h3 id="total-scenarios">7</h3>
+        <p>Total Scenarios</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">
+        <i class="fas fa-star"></i>
+      </div>
+      <div class="stat-info">
+        <h3 id="scenario-points">0</h3>
+        <p>Points Available</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="scenarios-grid" id="scenarios-container">
+    <!-- Scenarios will be populated by JavaScript -->
+  </div>
+</div>
+
+<script>
+  function renderScenarios(data) {
+    const scenariosContainer = document.getElementById('scenarios-container');
+    scenariosContainer.innerHTML = '';
+
+    if (data.length === 0) {
+      const noResult = document.createElement('div');
+      noResult.className = 'no-results';
+      noResult.innerHTML = `
+        <i class="fas fa-search"></i>
+        <h3>No scenarios found</h3>
+        <p>Please try refreshing the page</p>
+      `;
+      scenariosContainer.appendChild(noResult);
+      return;
+    }
+
+    data.forEach(scenario => {
+      const scenarioCard = document.createElement('div');
+      scenarioCard.className = 'scenario-card';
+      const levelClass = scenario.lvl.toLowerCase();
+
+      scenarioCard.innerHTML = `
+        <div class="scenario-image">
+          <img src="${scenario.img}" alt="${scenario.title}" loading="lazy">
+        </div>
+        <div class="scenario-content">
+          <div class="scenario-header">
+            <h3 class="scenario-title">${scenario.title}</h3>
+            <div class="scenario-badges">
+              <span class="difficulty-badge ${levelClass}">${scenario.lvl}</span>
+              <span class="points-badge">${scenario.points} pts</span>
+            </div>
+          </div>
+          <p class="scenario-description">${scenario.description}</p>
+          <div class="scenario-footer">
+            <a href="/scenario/${scenario.slug}" class="start-btn">
+              <i class="fas fa-play"></i> Start Investigation
+            </a>
+          </div>
+        </div>
+      `;
+      scenariosContainer.appendChild(scenarioCard);
+    });
+
+    // Update total scenarios count
+    document.getElementById('total-scenarios').textContent = data.length;
+
+    // Calculate total points
+    const totalPoints = data.reduce((sum, scenario) => sum + scenario.points, 0);
+    document.getElementById('scenario-points').textContent = totalPoints;
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    // Fetch scenarios
+    fetch('/api/scenarios')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Scenarios data received:', data);
+        renderScenarios(data);
+      })
+      .catch(error => {
+        console.error('Error fetching scenarios:', error);
+        const scenariosContainer = document.getElementById('scenarios-container');
+        scenariosContainer.innerHTML = `
+          <div class="no-results">
+            <i class="fas fa-exclamation-triangle"></i>
+            <h3>Error Loading Scenarios</h3>
+            <p>Please refresh the page or try again later.</p>
+          </div>
+        `;
+      });
+  });
+</script>
+
+<style>
+  .scenarios-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  .scenarios-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .page-title {
+    font-size: 3rem;
+    color: #2563eb;
+    margin-bottom: 10px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #2563eb, #3b82f6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .page-subtitle {
+    font-size: 1.2rem;
+    color: #cbd5e1;
+    margin: 0;
+  }
+
+  .scenarios-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+  }
+
+  .stat-card {
+    background: #181c2f;
+    border-radius: 16px;
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border: 1px solid #23264a;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #2563eb, #3b82f6);
+  }
+
+  .stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(37, 99, 235, 0.15);
+    border-color: #2563eb;
+  }
+
+  .stat-icon {
+    background: linear-gradient(135deg, #2563eb, #1e40af);
+    color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+  }
+
+  .stat-info h3 {
+    font-size: 2rem;
+    color: #2563eb;
+    margin: 0;
+    font-weight: 700;
+  }
+
+  .stat-info p {
+    color: #cbd5e1;
+    margin: 0;
+    font-size: 0.9rem;
+  }
+
+  .scenarios-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 24px;
+  }
+
+  .scenario-card {
+    background: #181c2f;
+    border-radius: 16px;
+    border: 1px solid #23264a;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .scenario-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 40px rgba(37, 99, 235, 0.15);
+    border-color: #2563eb;
+  }
+
+  .scenario-image {
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #23264a;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .scenario-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.3s ease;
+  }
+
+  .scenario-image::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, rgba(0, 0, 0, 0.2) 100%);
+    pointer-events: none;
+  }
+
+  .scenario-card:hover .scenario-image img {
+    transform: scale(1.05);
+  }
+
+  .scenario-content {
+    padding: 24px;
+  }
+
+  .scenario-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+    gap: 16px;
+  }
+
+  .scenario-title {
+    color: #e5e7eb;
+    font-size: 1.3rem;
+    margin: 0;
+    font-weight: 600;
+    line-height: 1.4;
+    flex: 1;
+  }
+
+  .scenario-badges {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-end;
+    flex-shrink: 0;
+  }
+
+  .difficulty-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  .difficulty-badge.easy {
+    background: #22c55e;
+    color: #0f1419;
+  }
+
+  .difficulty-badge.medium {
+    background: #fbbf24;
+    color: #0f1419;
+  }
+
+  .difficulty-badge.hard {
+    background: #ef4444;
+    color: white;
+  }
+
+  .points-badge {
+    background: linear-gradient(135deg, #2563eb, #1e40af);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  .scenario-description {
+    color: #9ca3af;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 0 0 20px 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .scenario-footer {
+    margin-top: auto;
+  }
+
+  .start-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #2563eb, #1e40af);
+    color: white;
+    border: none;
+    padding: 14px 24px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .start-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+  }
+
+  .start-btn:hover::before {
+    left: 100%;
+  }
+
+  .start-btn:hover {
+    background: linear-gradient(135deg, #1e40af, #1e3a8a);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
+  }
+
+  .no-results {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 20px;
+    color: #6b7280;
+  }
+
+  .no-results i {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    opacity: 0.5;
+  }
+
+  .no-results h3 {
+    font-size: 1.5rem;
+    margin: 0 0 10px 0;
+    color: #9ca3af;
+  }
+
+  .no-results p {
+    margin: 0;
+    font-size: 1rem;
+  }
+
+  @media (max-width: 768px) {
+    .scenarios-page {
+      padding: 10px;
+    }
+
+    .page-title {
+      font-size: 2rem;
+    }
+
+    .scenarios-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .scenario-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .scenario-badges {
+      flex-direction: row;
+      align-items: flex-start;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .page-title {
+      font-size: 1.5rem;
+    }
+
+    .scenarios-stats {
+      grid-template-columns: 1fr;
+    }
+
+    .stat-info h3 {
+      font-size: 1.5rem;
+    }
+  }
+</style>
+
+{% endblock %}
